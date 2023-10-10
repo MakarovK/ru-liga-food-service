@@ -12,7 +12,7 @@
 	<artifactId>liga_education</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
-	<name>OrderService</name>
+	<name>liga_education</name>
 	<description>Liga Education</description>
 	<modules>
 		<module>dependency_bom</module>
