@@ -12,9 +12,8 @@
 	<artifactId>liga_education</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
-	<name>liga_education</name>
-	<description>Liga Education</description>
-
+	<name>OrderService</name>
+	<description>LigaEducation</description>
 	<modules>
 		<module>dependency_bom</module>
 		<module>notification-service</module>
@@ -22,9 +21,17 @@
 		<module>delivery-service</module>
 		<module>kitchen-service</module>
 	</modules>
-
 	<properties>
 		<java.version>11</java.version>
 	</properties>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
 
 </project>

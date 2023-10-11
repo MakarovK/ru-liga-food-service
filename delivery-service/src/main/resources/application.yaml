@@ -1,11 +1,9 @@
 management:
 endpoints:
 web:
-server.port: 8080
 exposure:
 include: "*" #<2>
 endpoint:
 health:
 show-details: ALWAYS
-
 
