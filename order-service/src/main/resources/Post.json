@@ -1,0 +1,22 @@
+{
+  "id": 0,
+  "restaurant": {
+    "name": "Незвестно"
+  },
+  "timestamp": "11:22",
+  "items": [
+    {
+      "price": 244.5,
+      "quantity": 3,
+      "description": "Самая вкусная шаурма",
+      "image": "Путь1"
+    },
+    {
+      "price": 4565.99,
+      "quantity": 1,
+      "description": "Вкусный бургер",
+      "image": "Путь2"
+    }
+  ],
+  "status": "ACTIVE"
+}
