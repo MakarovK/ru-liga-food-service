@@ -10,15 +10,15 @@ import java.util.List;
 @Data
 @Accessors(chain = true)
 @Schema(description = "Синглтон для проверки в Postman")
-public class OrdersDTO {
+public class OrderResponseDTO {
     private List<OrderDTO> orderDTOList;
     private Integer page_index;
     private Integer page_count;
 
-    private static OrdersDTO ordersDTO;
+    private static OrderResponseDTO orderResponseDTO;
 
-    private OrdersDTO() {
-
+// Оставил просто для проверки данных и работы запросов, удалю после соединения с БД
+    private OrderResponseDTO() {
         orderDTOList = new ArrayList<>();
         orderDTOList.add(new OrderDTO()
                 .setId(1L)
@@ -54,16 +54,16 @@ public class OrdersDTO {
         page_count = 0;
     }
 
-    public static OrdersDTO getOrdersDTO() {
-        if (ordersDTO == null) {
-            ordersDTO = new OrdersDTO();
+    public static OrderResponseDTO getOrderResponseDTO() {
+        if (orderResponseDTO == null) {
+            orderResponseDTO = new OrderResponseDTO();
         }
-        return ordersDTO;
+        return orderResponseDTO;
     }
 
     public OrderDTO findById(Long id) {
         return orderDTOList.stream()
-                .filter(x -> x.getId() == id)
+                .filter(x -> x.getId().equals(id))
                 .findFirst()
                 .orElse(null);
     }

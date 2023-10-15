@@ -4,8 +4,7 @@ package ru.liga.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
-import ru.liga.dto.orders.OrderDTO;
-import ru.liga.dto.orders.OrdersDTO;
+
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -14,7 +13,7 @@ import java.util.stream.Collectors;
 @RestController
 //@RequestMapping("/deliveries")
 public class DeliveryController {
-
+    /*
     @GetMapping("/deliveries")
     @Operation (summary = "Получить детали доставки по статусу")
     public List<OrderDTO> getDeliveryById(@RequestParam("status") String status) {
@@ -24,5 +23,5 @@ public class DeliveryController {
                 .collect(Collectors.toList());
     }
 
-
+*/
 }

@@ -4,7 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
 import ru.liga.dto.orders.OrderDTO;
-import ru.liga.dto.orders.OrdersDTO;
+import ru.liga.dto.orders.OrderResponseDTO;
 import ru.liga.service.OrderDTOService;
 
 @Tag(name = "Api для заказов")
@@ -14,13 +14,13 @@ public class OrderController {
 
     @GetMapping("/orders")
     @Operation(summary = "Получить все заказы")
-    public OrdersDTO getAllOrders() {
-        return OrdersDTO.getOrdersDTO();
+    public OrderResponseDTO getAllOrders() {
+        return OrderResponseDTO.getOrderResponseDTO();
     }
     @GetMapping("/order/{id}")
     @Operation(summary = "Получить заказ по ID")
     public OrderDTO getOrderById(@PathVariable("id") Long id) {
-        return OrdersDTO.getOrdersDTO().findById(id);
+        return OrderResponseDTO.getOrderResponseDTO().findById(id);
     }
     @PutMapping("/order/update")
     @Operation(summary = "Обновить данные заказа")
