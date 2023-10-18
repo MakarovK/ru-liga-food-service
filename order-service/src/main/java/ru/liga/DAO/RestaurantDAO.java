@@ -1,37 +1,38 @@
-package ru.liga.service;
+package ru.liga.DAO;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
-import ru.liga.entity.Customer;
+import ru.liga.entity.Restaurant;
 
 import javax.persistence.NoResultException;
+
+
 @Component
-public class CustomerDAO {
+public class RestaurantDAO {
     private final SessionFactory sessionFactory;
 
-    public CustomerDAO() {
+    public RestaurantDAO() {
         Configuration configuration = new Configuration().configure();
         sessionFactory = configuration.buildSessionFactory();
     }
 
-    public Customer getCustomerById(Long id) {
+    public Restaurant getRestaurantById(Long id) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        Customer customer;
+        Restaurant restaurant;
         try {
-            customer = session.find(Customer.class, id); // Поиск по ID
+            restaurant = session.find(Restaurant.class, id);
             transaction.commit();
         } catch (NoResultException e) {
-            customer = null;
+            restaurant = null;
             transaction.rollback();
         } finally {
             session.close();
         }
-
-        return customer;
+        return restaurant;
     }
+
 }

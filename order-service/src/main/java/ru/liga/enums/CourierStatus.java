@@ -1,4 +1,4 @@
-package ru.liga.entity;
+package ru.liga.enums;
 
 import lombok.NoArgsConstructor;
 

@@ -4,15 +4,17 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.liga.entity.Customer;
-import ru.liga.service.CustomerDAO;
+import ru.liga.DAO.CustomerDAO;
+
+import java.util.List;
 
 @Tag(name = "Api для заказов")
 @RestController
 @RequestMapping("/customers")
-public class OrderController {
+public class CustomerController {
     private CustomerDAO customerDAO;
     @Autowired
-    public OrderController(CustomerDAO customerDAO) {
+    public CustomerController(CustomerDAO customerDAO) {
         this.customerDAO = customerDAO;
     }
 
@@ -23,5 +25,10 @@ public class OrderController {
     @GetMapping("/{customer_id}")
     public Customer getCustomerById(@PathVariable("customer_id") Long id) {
         return customerDAO.getCustomerById(id);
+    }
+
+    @GetMapping("/all")
+    public List<Customer> getCustomers() {
+        return customerDAO.getCustomers();
     }
 }
