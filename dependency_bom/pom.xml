@@ -19,7 +19,7 @@
         <maven.compiler.plugin>3.11.0</maven.compiler.plugin>
         <spring.version>2.7.16</spring.version>
         <swagger.version>2.2.16</swagger.version>
-        <postgres.version>42.3.8</postgres.version>
+        <postgres.version>42.6.0</postgres.version>
         <liquibase.version>4.24.0</liquibase.version>
         <lombok.version>1.18.30</lombok.version>
         <logging.version>2.7.16</logging.version>
@@ -27,7 +27,8 @@
         <postgis.version>2.5.1</postgis.version>
         <checkstyle.plugin.version>3.3.0</checkstyle.plugin.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <hibernate.version>6.3.0.Final</hibernate.version>
+        <hibernate.version>5.3.20.Final</hibernate.version>
+        <jpa.version>3.1.4</jpa.version>
         <java.version>11</java.version>
     </properties>
 
@@ -88,6 +89,11 @@
                 <artifactId>hibernate-core</artifactId>
                 <version>${hibernate.version}</version>
                 <type>pom</type>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-data-jpa</artifactId>
+                <version>${jpa.version}</version>
             </dependency>
         </dependencies>
 
