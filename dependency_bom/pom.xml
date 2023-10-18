@@ -12,10 +12,6 @@
     <artifactId>dependency_bom</artifactId>
     <packaging>pom</packaging>
     <name>dependency_bom</name>
-    <modules>
-        <module>../migration</module>
-    </modules>
-
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
@@ -31,6 +27,7 @@
         <postgis.version>2.5.1</postgis.version>
         <checkstyle.plugin.version>3.3.0</checkstyle.plugin.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <hibernate.version>6.3.0.Final</hibernate.version>
         <java.version>11</java.version>
     </properties>
 
@@ -85,6 +82,12 @@
                 <groupId>net.postgis</groupId>
                 <artifactId>postgis-jdbc</artifactId>
                 <version>${postgis.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-core</artifactId>
+                <version>${hibernate.version}</version>
+                <type>pom</type>
             </dependency>
         </dependencies>
 

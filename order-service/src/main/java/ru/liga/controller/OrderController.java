@@ -5,13 +5,21 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
 import ru.liga.dto.orders.OrderDTO;
 import ru.liga.dto.orders.OrderResponseDTO;
+import ru.liga.entity.Customer;
 import ru.liga.service.OrderDTOService;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Tag(name = "Api для заказов")
 @RestController
 //@RequestMapping("/orders")
 public class OrderController {
-
+    @GetMapping("/customers")
+        public Customer getAllOrders() {
+            return new Customer();
+    }
+/*
     @GetMapping("/orders")
     @Operation(summary = "Получить все заказы")
     public OrderResponseDTO getAllOrders() {
@@ -57,5 +65,6 @@ he
         return "Заказ под номером " + id + " удалён";
     }
     */
+}
 
 

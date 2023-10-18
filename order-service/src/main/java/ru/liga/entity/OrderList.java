@@ -1,19 +1,18 @@
-package ru.liga.dto.orders;
+package ru.liga.entity;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.Accessors;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Data
 @Accessors(chain = true)
 @Schema(description = "Синглтон для проверки в Postman")
+@AllArgsConstructor
 @NoArgsConstructor
-public class OrderResponseDTO {
-    private List<OrderDTO> orderDTOList;
+public class OrderList {
+    private List<Order> orderDTOList;
     private Integer page_index;
     private Integer page_count;
 

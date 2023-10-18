@@ -4,12 +4,10 @@ import ru.liga.dto.orders.OrderDTO;
 import ru.liga.dto.orders.OrderResponseDTO;
 
 public class OrderDTOService {
-    public static void createNewOrder(OrderDTO orderDTO) {
-        OrderResponseDTO.getOrderResponseDTO()
-                .getOrderDTOList()
-                .add(orderDTO
-                        .setId((long) (OrderResponseDTO
-                                .getOrderResponseDTO()
-                                .getOrderDTOList().size()+1)));
+    public OrderDTO findById(OrderResponseDTO orderResponseDTO, Long id) {
+        return orderResponseDTO.getOrderDTOList().stream()
+                .filter(x -> x.getId().equals(id))
+                .findFirst()
+                .orElse(null);
     }
 }
