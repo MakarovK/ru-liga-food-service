@@ -18,6 +18,7 @@ import javax.persistence.*;
 public class Courier {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(name = "phone")

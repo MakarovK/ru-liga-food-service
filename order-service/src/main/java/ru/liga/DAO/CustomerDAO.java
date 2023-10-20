@@ -20,34 +20,36 @@ public class CustomerDAO {
     }
 
     public Customer getCustomerById(Long id) {
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
-        Customer customer;
-        try {
-            customer = session.find(Customer.class, id);
-            transaction.commit();
-        } catch (NoResultException e) {
-            customer = null;
-            transaction.rollback();
-        } finally {
-            session.close();
+        try (Session session = sessionFactory.openSession()) {
+            Transaction transaction = session.beginTransaction();
+            Customer customer;
+            try {
+                customer = session.find(Customer.class, id);
+                transaction.commit();
+            } catch (NoResultException e) {
+                customer = null;
+                transaction.rollback();
+            } finally {
+                session.close();
+            }
+            return customer;
         }
-        return customer;
     }
 
     public List<Customer> getCustomers() {
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
-        List<Customer> customers;
-        try {
-        customers = session.createQuery("from Customer", Customer.class).list();
-        transaction.commit();
-        } catch (NoResultException e) {
-            customers = null;
-            transaction.rollback();
-        } finally {
-            session.close();
+        try (Session session = sessionFactory.openSession()) {
+            Transaction transaction = session.beginTransaction();
+            List<Customer> customers;
+            try {
+                customers = session.createQuery("from Customer", Customer.class).list();
+                transaction.commit();
+            } catch (NoResultException e) {
+                customers = null;
+                transaction.rollback();
+            } finally {
+                session.close();
+            }
+            return customers;
         }
-        return customers;
     }
 }

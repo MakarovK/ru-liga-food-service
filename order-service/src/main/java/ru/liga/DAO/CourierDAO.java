@@ -19,18 +19,17 @@ public class CourierDAO {
     }
 
     public Courier getCourierById(Long id) {
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
-        Courier courier;
-        try {
-            courier = session.find(Courier.class, id);
-            transaction.commit();
-        } catch (NoResultException e) {
-            courier = null;
-            transaction.rollback();
-        } finally {
-            session.close();
+        try (Session session = sessionFactory.openSession();) {
+            Transaction transaction = session.beginTransaction();
+            Courier courier;
+            try {
+                courier = session.find(Courier.class, id);
+                transaction.commit();
+            } catch (NoResultException e) {
+                courier = null;
+                transaction.rollback();
+            }
+            return courier;
         }
-        return courier;
     }
 }

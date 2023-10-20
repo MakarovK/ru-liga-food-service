@@ -18,10 +18,6 @@ public class CustomerController {
         this.customerDAO = customerDAO;
     }
 
-    @GetMapping
-    public String getHello() {
-        return "HelloWorld";
-    }
     @GetMapping("/{customer_id}")
     public Customer getCustomerById(@PathVariable("customer_id") Long id) {
         return customerDAO.getCustomerById(id);

@@ -14,6 +14,7 @@ import javax.persistence.*;
 @Table(name = "restaurants")
 public class Restaurant {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(name = "address")

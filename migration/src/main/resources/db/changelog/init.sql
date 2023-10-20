@@ -56,6 +56,8 @@ create table if not exists order_items
     foreign key (order_id) references orders (id)
 );
 
+create sequence hibernate_sequence start 1;
+
 comment on table couriers is 'Курьеры';
 comment on column couriers.id is 'ID курьера';
 comment on column couriers.phone is 'Номер телефона курьера';

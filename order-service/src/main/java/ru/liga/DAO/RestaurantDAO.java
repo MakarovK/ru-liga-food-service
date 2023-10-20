@@ -20,19 +20,22 @@ public class RestaurantDAO {
     }
 
     public Restaurant getRestaurantById(Long id) {
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
-        Restaurant restaurant;
-        try {
-            restaurant = session.find(Restaurant.class, id);
-            transaction.commit();
-        } catch (NoResultException e) {
-            restaurant = null;
-            transaction.rollback();
-        } finally {
-            session.close();
+
+
+        try (Session session = sessionFactory.openSession()) {
+            Transaction transaction = session.beginTransaction();
+            Restaurant restaurant;
+            try {
+                restaurant = session.find(Restaurant.class, id);
+                transaction.commit();
+            } catch (NoResultException e) {
+                restaurant = null;
+                transaction.rollback();
+            } finally {
+                session.close();
+            }
+            return restaurant;
         }
-        return restaurant;
     }
 
 }

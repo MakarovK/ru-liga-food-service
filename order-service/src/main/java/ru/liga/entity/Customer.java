@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "customers")
 public class Customer {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(name = "phone")
