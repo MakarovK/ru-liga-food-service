@@ -50,7 +50,7 @@ public class OrderDAO {
         }
     }
 
-    public List<Order> getOrderListByCourierId(Long courier_id) {
+    public List<Order> getOrderByCourierId(Long courier_id) {
         try (Session session = sessionFactory.openSession();) {
             Transaction transaction = session.beginTransaction();
             List<Order> orders;

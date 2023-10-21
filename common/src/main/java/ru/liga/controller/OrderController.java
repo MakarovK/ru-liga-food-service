@@ -8,7 +8,7 @@ import ru.liga.entity.Order;
 import java.util.List;
 
 @RestController
-@RequestMapping("/orders")
+@RequestMapping("/feign-orders")
 public class OrderController {
     private OrderDAO orderDAO;
     @Autowired
@@ -16,14 +16,14 @@ public class OrderController {
         this.orderDAO = orderDAO;
     }
 
-    @GetMapping("/{id}")
-    public Order getOrderListById(@PathVariable("id") Long id) {
+    @GetMapping("/{order_id}")
+    public Order getOrderListById(@PathVariable("order_id") Long id) {
         return orderDAO.getOrderListById(id);
     }
 
     @GetMapping("/courier/{courier_id}")
     public List<Order> getOrderListByCourierId(@PathVariable("courier_id") Long courier_id) {
-        return orderDAO.getOrderListByCourierId(courier_id);
+        return orderDAO.getOrderByCourierId(courier_id);
     }
 
     @GetMapping("/all")
