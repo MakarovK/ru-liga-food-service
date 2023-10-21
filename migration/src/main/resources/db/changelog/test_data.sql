@@ -24,4 +24,4 @@ values
     (1, 1, 1, 70000, 2),
     (2, 2, 2, 160000, 2);
 
-SELECT * from orders;
+SELECT * from couriers;

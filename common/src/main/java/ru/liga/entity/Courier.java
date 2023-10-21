@@ -3,9 +3,6 @@ package ru.liga.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Type;
-import org.postgis.Geometry;
-import org.postgis.Point;
 import ru.liga.enums.CourierStatus;
 
 import javax.persistence.*;

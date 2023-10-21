@@ -9,10 +9,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/orders")
-public class OrderListController {
+public class OrderController {
     private OrderDAO orderDAO;
     @Autowired
-    public OrderListController(OrderDAO orderDAO) {
+    public OrderController(OrderDAO orderDAO) {
         this.orderDAO = orderDAO;
     }
 

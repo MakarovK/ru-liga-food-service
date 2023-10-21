@@ -6,19 +6,19 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.liga.entity.Courier;
-import ru.liga.DAO.CourierDAO;
+import ru.liga.feign.CoreFeign;
 
 @RestController
 @RequestMapping("/couriers")
 public class CourierController {
-    private CourierDAO courierDAO;
+    private CoreFeign coreFeign;
 
     @Autowired
-    public CourierController(CourierDAO courierDAO) {
-        this.courierDAO = courierDAO;
+    public CourierController(CoreFeign coreFeign) {
+        this.coreFeign = coreFeign;
     }
     @GetMapping("/{courier_id}")
     public Courier getCourierById(@PathVariable("courier_id") Long id) {
-        return courierDAO.getCourierById(id);
+        return coreFeign.getCourierById(id);
     }
 }

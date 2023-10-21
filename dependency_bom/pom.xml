@@ -32,6 +32,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <hibernate.version>5.3.20.Final</hibernate.version>
         <mybatis.version>3.5.6</mybatis.version>
+        <faign.version>3.1.8</faign.version>
         <jpa.version>3.1.4</jpa.version>
         <java.version>11</java.version>
     </properties>
@@ -78,11 +79,11 @@
                 <artifactId>swagger-annotations</artifactId>
                 <version>${swagger.version}</version>
             </dependency>
-                <dependency>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-logging</artifactId>
-                    <version>${logging.version}</version>
-                </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-logging</artifactId>
+                <version>${logging.version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.postgis</groupId>
                 <artifactId>postgis-jdbc</artifactId>
@@ -109,8 +110,12 @@
                 <artifactId>mybatis</artifactId>
                 <version>${mybatis.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-openfeign</artifactId>
+                <version>${faign.version}</version>
+            </dependency>
         </dependencies>
-
     </dependencyManagement>
 
     <build>

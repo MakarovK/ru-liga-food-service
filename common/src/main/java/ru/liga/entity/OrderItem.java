@@ -2,8 +2,6 @@ package ru.liga.entity;
 
 import lombok.Data;
 
-import javax.persistence.*;
-
 @Data
 
 public class OrderItem {
