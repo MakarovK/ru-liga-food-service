@@ -5,72 +5,72 @@ import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Component;
-import ru.liga.entity.OrderList;
+import ru.liga.entity.Order;
 
 import javax.persistence.NoResultException;
 import java.util.List;
 
 @Component
-public class OrderListDAO {
+public class OrderDAO {
     private final SessionFactory sessionFactory;
 
-    public OrderListDAO() {
+    public OrderDAO() {
         Configuration configuration = new Configuration().configure();
         sessionFactory = configuration.buildSessionFactory();
     }
 
-    public OrderList getOrderListById(Long id) {
+    public Order getOrderListById(Long id) {
 
         try (Session session = sessionFactory.openSession()) {
             Transaction transaction = session.beginTransaction();
-            OrderList orderList;
+            Order order;
             try {
-                orderList = session.find(OrderList.class, id);
+                order = session.find(Order.class, id);
                 transaction.commit();
             } catch (NoResultException e) {
-                orderList = null;
+                order = null;
                 transaction.rollback();
             }
-            return orderList;
+            return order;
         }
     }
 
-    public List<OrderList> getAllOrderList() {
+    public List<Order> getAllOrderList() {
         try (Session session = sessionFactory.openSession()) {
             Transaction transaction = session.beginTransaction();
-            List<OrderList> orderLists;
+            List<Order> orders;
             try {
-                orderLists = session.createQuery("from OrderList ").list();
+                orders = session.createQuery("from Order ").list();
                 transaction.commit();
             } catch (NoResultException e) {
-                orderLists = null;
+                orders = null;
                 transaction.rollback();
             }
-            return orderLists;
+            return orders;
         }
     }
 
-    public List<OrderList> getOrderListByCourierId(Long courier_id) {
+    public List<Order> getOrderListByCourierId(Long courier_id) {
         try (Session session = sessionFactory.openSession();) {
             Transaction transaction = session.beginTransaction();
-            List<OrderList> orderLists;
+            List<Order> orders;
             try {
-                Query query = session.createQuery("from OrderList where courier.id = :courierId");
+                Query query = session.createQuery("from Order where courier.id = :courierId");
                 query.setParameter("courierId", courier_id);
-                orderLists = query.list();
+                orders = query.list();
                 transaction.commit();
             } catch (NoResultException e) {
-                orderLists = null;
+                orders = null;
             }
-            return orderLists;
+            return orders;
         }
     }
 
-    public void createOrder(OrderList orderList) {
+    public void createOrder(Order order) {
         try (Session session = sessionFactory.openSession()) {
             Transaction transaction = session.beginTransaction();
             try {
-                session.persist(orderList);
+                session.persist(order);
                 transaction.commit();
             } catch (Exception e) {
                 transaction.rollback();
@@ -84,10 +84,10 @@ public class OrderListDAO {
 
         try (Session session = sessionFactory.openSession()) {
             Transaction transaction = session.beginTransaction();
-            OrderList orderList;
+            Order order;
             try {
-                orderList = session.find(OrderList.class, id);
-                session.delete(orderList);
+                order = session.find(Order.class, id);
+                session.delete(order);
                 transaction.commit();
             } catch (Exception e) {
                 transaction.rollback();

@@ -12,6 +12,9 @@
     <artifactId>dependency_bom</artifactId>
     <packaging>pom</packaging>
     <name>dependency_bom</name>
+    <modules>
+        <module>../common</module>
+    </modules>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
@@ -28,6 +31,7 @@
         <checkstyle.plugin.version>3.3.0</checkstyle.plugin.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <hibernate.version>5.3.20.Final</hibernate.version>
+        <mybatis.version>3.5.6</mybatis.version>
         <jpa.version>3.1.4</jpa.version>
         <java.version>11</java.version>
     </properties>
@@ -99,6 +103,11 @@
                 <groupId>org.hibernate</groupId>
                 <artifactId>hibernate-spatial</artifactId>
                 <version>${hibernate.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mybatis</groupId>
+                <artifactId>mybatis</artifactId>
+                <version>${mybatis.version}</version>
             </dependency>
         </dependencies>
 

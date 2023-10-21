@@ -19,7 +19,7 @@
     <mapping class="ru.liga.entity.Customer"/>
     <mapping class="ru.liga.entity.Courier"/>
     <mapping class="ru.liga.entity.Restaurant"/>
-    <mapping class="ru.liga.entity.OrderList"/>
+    <mapping class="ru.liga.entity.Order"/>
     <!-- <property name="connection.username"/> -->
     <!-- <property name="connection.password"/> -->
 

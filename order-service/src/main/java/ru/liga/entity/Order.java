@@ -9,7 +9,7 @@ import java.sql.Timestamp;
 @Data
 @Entity
 @Table(name = "orders")
-public class OrderList {
+public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long Id;
