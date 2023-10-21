@@ -9,7 +9,7 @@ import ru.liga.DAO.RestaurantDAO;
 import ru.liga.entity.Restaurant;
 
 @RestController
-@RequestMapping("/restaurants")
+@RequestMapping("/feign-restaurants")
 public class RestaurantController {
     private RestaurantDAO restaurantDAO;
     @Autowired

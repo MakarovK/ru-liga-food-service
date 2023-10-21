@@ -5,11 +5,12 @@ import org.springframework.web.bind.annotation.*;
 import ru.liga.entity.Courier;
 import ru.liga.entity.Customer;
 import ru.liga.entity.Order;
+import ru.liga.entity.OrderItem;
 
 import java.util.List;
 
-@FeignClient(name = "common", url = "http://localhost:8087")
-public interface CoreFeign {
+@FeignClient(name = "OrderFeign", url = "http://localhost:8087")
+public interface OrderFeign {
 
     //Courier API
 
@@ -40,4 +41,9 @@ public interface CoreFeign {
 
     @DeleteMapping("/feign-orders/delete/{order_id}")
     String deleteOrderById(@PathVariable("order_id") Long order_id);
+
+    // Order-items API
+/*
+    @GetMapping("/feign-order-item/all")
+    List<OrderItem> getOrderAllItems();*/
 }
