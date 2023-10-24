@@ -20,6 +20,7 @@
     <mapping class="ru.liga.entity.Courier"/>
     <mapping class="ru.liga.entity.Restaurant"/>
     <mapping class="ru.liga.entity.Order"/>
+    <mapping class="ru.liga.entity.OrderItem"/>
     <!-- <property name="connection.username"/> -->
     <!-- <property name="connection.password"/> -->
 

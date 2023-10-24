@@ -1,16 +1,15 @@
 package ru.liga.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.experimental.Accessors;
 import ru.liga.enums.CourierStatus;
 
 import javax.persistence.*;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
+@Getter
+@Setter
 @Entity
+@Accessors(chain = true)
 @Table(name = "couriers")
 public class Courier {
 

@@ -1,14 +1,14 @@
 package ru.liga.entity;
 
 import javax.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
+import lombok.*;
+import lombok.experimental.Accessors;
+
+@Getter
+@Setter
 @Entity
+@Accessors(chain = true)
 @Table(name = "customers")
 public class Customer {
     @Id

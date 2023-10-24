@@ -1,0 +1,158 @@
+[33mcommit c876825c1efc71b4d31da4a6605f8ffff10c44ed[m[33m ([m[1;36mHEAD -> [m[1;32mhometask-5[m[33m, [m[1;31morigin/hometask-5[m[33m)[m
+Author: MakarovK <maka73-73@mail.ru>
+Date:   Sun Oct 22 02:11:26 2023 +0300
+
+    Начало работы с MyBatis, Rest перенесены в подходящие сервисы
+
+[33mcommit 25ba1611d17c77dc3e9a3e166a1518c6bd0171ea[m
+Author: MakarovK <maka73-73@mail.ru>
+Date:   Sat Oct 21 23:25:32 2023 +0300
+
+    Все Rest контроллеры в Orders реализованы через feign
+
+[33mcommit 323f25e52eb81a1215f83093d5b053e6ea9ac658[m
+Author: MakarovK <maka73-73@mail.ru>
+Date:   Sat Oct 21 22:37:13 2023 +0300
+
+    Все сущности Entity перенесены в отдельный модуль common.
+    Подключена зависимость faign и реальзована для сущности Courier
+
+[33mcommit a5c03957a80838f679d4093bbc62daa7dac83c8e[m
+Author: MakarovK <maka73-73@mail.ru>
+Date:   Sat Oct 21 21:22:32 2023 +0300
+
+    1. Добавлена зависимость MyBatis
+    2. Дописаны все модели Pojo
+    3. На Hibernate написана реализация Get, Post, Delete заказов для Order
+
+[33mcommit a1f0bb77900e06befb343b2b09518fe4c62d879b[m
+Author: MakarovK <maka73-73@mail.ru>
+Date:   Fri Oct 20 20:11:54 2023 +0300
+
+    Конструкции try-catch-finally в DAO заменены на try-with-resources
+    Добавлена сущность OrderList (orders в SQL таблице), добавлены Get, Post, Delete запросы (работоспособность проверена в Postman).
+
+[33mcommit f3d4c62852df0a16f823c36a95879069a7fd3582[m
+Author: MakarovK <maka73-73@mail.ru>
+Date:   Fri Oct 20 17:00:03 2023 +0300
+
+    Добавлены GET-запросы для Restaurant, Couriers, Customers.
+    Исправлена ошибка десериализации из БД при работе с PostGis.
+
+[33mcommit 1fd5db74d5d56fd0afc887c583322b416b655ec6[m
+Author: MakarovK <maka73-73@mail.ru>
+Date:   Thu Oct 19 00:35:21 2023 +0300
+
+    Добавлены GET-запросы для Restaurant, Couriers, Customers.
+    Исправлена ошибка десериализации из БД при работе с PostGis.
+
+[33mcommit ffcf97f62c0663790bd3b4e76d485149091d337b[m[33m ([m[1;32mhometask-4[m[33m)[m
+Author: MakarovK <maka73-73@mail.ru>
+Date:   Wed Oct 18 19:14:05 2023 +0300
+
+    Получилось написать GET-запрос и получить данные из БД.
+
+[33mcommit 99964ce7892f2463e393978271134d8c3c27cd37[m
+Author: MakarovK <maka73-73@mail.ru>
+Date:   Wed Oct 18 14:47:48 2023 +0300
+
+    1. Исправлены заголовки таблиц SQL.
+    2. Добавлены зависимости Hibernate, написан конфиг файл для Hibernate.
+    3. Добавлены новые POJO для работы с БД.
+
+[33mcommit 708eef4facc9f45f326ed780f680c79728e405b7[m[33m ([m[1;31morigin/hometask-4[m[33m)[m
+Author: MakarovK <maka73-73@mail.ru>
+Date:   Mon Oct 16 00:04:02 2023 +0300
+
+    1. Подчищены shakeyaml в сервисах, кроме родительского
+    2. Переименован класс OrdersDTO
+    3. Использована аннотация lombok для конструктора в RestaurantDTO
+    4. Создан модуль migration
+    5. Написаны скрипты миграции на основе имеющейся базы данных init.sql, init_rollback.sql
+    6. Написан скрипт для тестовых значений test_data.sql
+
+[33mcommit 69ee4f7915b9391592ecb290fd0fb815e0d6f1da[m[33m ([m[1;31morigin/hometask-3[m[33m, [m[1;32mhometask-3[m[33m)[m
+Author: MakarovK <maka73-73@mail.ru>
+Date:   Fri Oct 13 23:25:20 2023 +0300
+
+    1. Добавлены новые классы в DTO.
+    2. Реализован синглтон для проверки контроллеров.
+    3. Реализованы GET, POST контроллеры вместо PUT контроллера затычка.
+    4. Так же реализован GET в delivery.
+    5. Всё разобрано, скомпилировано и протестировано в Postman.
+
+[33mcommit 2d5f9c24912149897c68a78f2fde0cc8fb99ce6b[m
+Merge: 593ee53 4f8e90c
+Author: MakarovK <maka73-73@mail.ru>
+Date:   Thu Oct 12 11:31:20 2023 +0300
+
+    Merge branch 'hometask-3' of https://github.com/MakarovK/ru-liga-food-service into hometask-3
+
+[33mcommit 593ee538e531657794cc7db95f2a1b5ce98b2a08[m
+Author: MakarovK <maka73-73@mail.ru>
+Date:   Thu Oct 12 11:29:15 2023 +0300
+
+    1. Добавлены зависимости io.swagger.core.v и org.projectlombok в родительский pom и наследникам delivery-service, order-service.
+    2. Реализованы классы DTO для delivery-service, order-service.
+    3. Реализованы REST контролле для delivery-service, order-service.
+
+[33mcommit 4f8e90c82d4b82313b639be8586feb266d4d867b[m
+Author: MakarovK <maka73-73@mail.ru>
+Date:   Thu Oct 12 11:22:23 2023 +0300
+
+    1. Добавлены зависимости io.swagger.core.v и org.projectlombok в роди…
+    …тельский pom и наследникам delivery-service, order-service.
+    
+    2. Реализованы классы DTO для delivery-service, order-service.
+    3. Реализованы REST контролле для delivery-service, order-service.
+
+[33mcommit 2106507c5e72556871d0c02cedb1211a7ccc4ad6[m
+Author: MakarovK <maka73-73@mail.ru>
+Date:   Wed Oct 11 21:41:30 2023 +0300
+
+    1. Добавлены зависимости io.swagger.core.v и org.projectlombok в родительский pom и наследникам delivery-service, order-service.
+    2. Реализованы классы DTO для delivery-service, order-service.
+    3. Реализованы REST контролле для delivery-service, order-service.
+
+[33mcommit f021bc9787a538388500683832e6ef774188f018[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/hometask-2[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmaster[m[33m)[m
+Author: MakarovK <maka73-73@mail.ru>
+Date:   Wed Oct 11 11:47:20 2023 +0300
+
+    1. Удалены все application.properties, server.port перенесён в application.yaml.
+    2. Удалён src из корневого каталога.
+
+[33mcommit c15af0a443df9a2f882247bfb8d6b5ce53ae629c[m
+Author: MakarovK <maka73-73@mail.ru>
+Date:   Wed Oct 11 10:54:43 2023 +0300
+
+    Corrected errors indicated by the mentor
+
+[33mcommit daa2d0d1f4d7778baaa3e4b6455c96cf2dc8e324[m
+Author: MakarovK <maka73-73@mail.ru>
+Date:   Tue Oct 10 23:56:12 2023 +0300
+
+    28 Days later
+
+[33mcommit c988af07975be7b9de68cec1362ee18f48886073[m
+Author: MakarovK <maka73-73@mail.ru>
+Date:   Tue Oct 10 23:52:23 2023 +0300
+
+    28 Days later
+
+[33mcommit b930407e41bae9c29be15540314f9da8c6243b12[m
+Author: MakarovK <maka73-73@mail.ru>
+Date:   Tue Oct 10 23:51:32 2023 +0300
+
+    28 Days later
+
+[33mcommit 04d5b427d887c278932b2febab7642007cbf652b[m
+Author: MakarovK <maka73-73@mail.ru>
+Date:   Tue Oct 10 22:35:13 2023 +0300
+
+    28 Days later
+
+[33mcommit fcde8f5661b5ea5f603d12fa74db13ad1d73d723[m
+Author: MakarovK <maka73-73@mail.ru>
+Date:   Tue Oct 10 22:33:43 2023 +0300
+
+    28 Days later

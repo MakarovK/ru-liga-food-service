@@ -4,6 +4,10 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 public enum CourierStatus {
-    PENDING, PICKING, DELIVERING, COMPLETE,
-                DENIED, REFUNDED;
+    PENDING,
+    PICKING,
+    DELIVERING,
+    COMPLETE,
+    DENIED,
+    REFUNDED;
 }

@@ -1,11 +1,16 @@
 package ru.liga.entity;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 
-@Data
+@Getter
+@Setter
 @Entity
+@Accessors(chain = true)
 @Table(name = "restaurant_menu_items")
 public class RestaurantMenuItem {
     @Id

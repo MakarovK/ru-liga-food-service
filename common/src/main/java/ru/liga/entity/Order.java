@@ -1,13 +1,18 @@
 package ru.liga.entity;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.experimental.Accessors;
 import ru.liga.enums.OrderStatus;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.List;
 
-@Data
+@Getter
+@Setter
 @Entity
+@Accessors(chain = true)
 @Table(name = "orders")
 public class Order {
     @Id
