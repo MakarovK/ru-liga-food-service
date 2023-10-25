@@ -21,6 +21,7 @@
     <mapping class="ru.liga.entity.Restaurant"/>
     <mapping class="ru.liga.entity.Order"/>
     <mapping class="ru.liga.entity.OrderItem"/>
+    <mapping class="ru.liga.entity.RestaurantMenuItem"/>
     <!-- <property name="connection.username"/> -->
     <!-- <property name="connection.password"/> -->
 

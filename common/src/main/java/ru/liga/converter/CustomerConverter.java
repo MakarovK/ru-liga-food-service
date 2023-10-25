@@ -6,14 +6,14 @@ import ru.liga.entity.Customer;
 
 @Component
 public class CustomerConverter {
-    public CustomerDTO entityToDto(Customer entity) {
+    public static CustomerDTO entityToDto(Customer entity) {
         return new CustomerDTO()
                 .setId(entity.getId())
                 .setPhone(entity.getPhone())
                 .setEmail(entity.getEmail())
                 .setAddress(entity.getAddress());
     }
-    public Customer dtoToEntity(CustomerDTO customerDTO) {
+    public static Customer dtoToEntity(CustomerDTO customerDTO) {
         return new Customer()
                 .setId(customerDTO.getId())
                 .setPhone(customerDTO.getPhone())

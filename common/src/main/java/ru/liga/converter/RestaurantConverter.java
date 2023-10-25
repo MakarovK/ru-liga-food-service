@@ -6,16 +6,18 @@ import ru.liga.entity.Restaurant;
 
 @Component
 public class RestaurantConverter {
-    public RestaurantDTO entityToDto(Restaurant entity) {
+    public static RestaurantDTO entityToDto(Restaurant entity) {
         return new RestaurantDTO()
                 .setId(entity.getId())
                 .setAddress(entity.getAddress())
+                .setRestaurantMenuItems(entity.getRestaurantMenuItems())
                 .setKitchenStatus(entity.getKitchenStatus());
     }
-    public Restaurant dtoToEntity(RestaurantDTO restaurant) {
+    public static Restaurant dtoToEntity(RestaurantDTO restaurant) {
         return new Restaurant()
                 .setId(restaurant.getId())
                 .setAddress(restaurant.getAddress())
+                .setRestaurantMenuItems(restaurant.getRestaurantMenuItems())
                 .setKitchenStatus(restaurant.getKitchenStatus());
     }
 }

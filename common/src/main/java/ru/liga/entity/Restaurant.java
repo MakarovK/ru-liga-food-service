@@ -5,6 +5,7 @@ import lombok.experimental.Accessors;
 import ru.liga.enums.KitchenStatus;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @Setter
@@ -18,6 +19,10 @@ public class Restaurant {
 
     @Column(name = "address")
     private String address;
+
+    @OneToMany
+    @JoinColumn(name = "restaurant_id")
+    private List<RestaurantMenuItem> restaurantMenuItems;
 
     @Column(name = "status")
     @Enumerated(EnumType.STRING)

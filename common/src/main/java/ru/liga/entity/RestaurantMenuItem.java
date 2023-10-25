@@ -1,6 +1,5 @@
 package ru.liga.entity;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -15,10 +14,6 @@ import javax.persistence.*;
 public class RestaurantMenuItem {
     @Id
     private Long id;
-
-    @ManyToOne
-    @JoinColumn(name = "restaurant_id")
-    private Restaurant restaurant_id;
 
     @Column(name = "name")
     private String name;

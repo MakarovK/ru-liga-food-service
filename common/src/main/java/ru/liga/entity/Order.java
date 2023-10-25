@@ -31,6 +31,10 @@ public class Order {
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
 
+    @OneToMany
+    @JoinColumn(name = "order_id")
+    private List<OrderItem> order_item_id;
+
     @ManyToOne
     @JoinColumn(name = "courier_id")
     private Courier courier;

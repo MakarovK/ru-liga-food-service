@@ -6,14 +6,14 @@ import ru.liga.entity.Courier;
 
 @Component
 public class CourierConverter {
-    public CourierDTO entityToDto(Courier entity) {
+    public static CourierDTO entityToDto(Courier entity) {
         return new CourierDTO()
                 .setId(entity.getId())
                 .setPhone(entity.getPhone())
                 .setStatus(entity.getStatus())
                 .setCoordinates(entity.getCoordinates());
     }
-    public Courier dtoToEntity(CourierDTO courierDTO) {
+    public static Courier dtoToEntity(CourierDTO courierDTO) {
         return new Courier()
                 .setId(courierDTO.getId())
                 .setPhone(courierDTO.getPhone())

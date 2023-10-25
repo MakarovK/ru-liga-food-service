@@ -17,10 +17,6 @@ public class OrderItem {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long Id;
 
-    @ManyToOne
-    @JoinColumn(name = "order_id")
-    private Order order_id;
-
     @OneToOne
     @JoinColumn(name = "restaurant_menu_item_id")
     private RestaurantMenuItem restaurantMenuItem_id;
