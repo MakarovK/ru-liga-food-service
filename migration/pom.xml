@@ -24,8 +24,13 @@
             <artifactId>liquibase-core</artifactId>
         </dependency>
         <dependency>
-            <groupId>net.postgis</groupId>
+            <groupId>org.postgis</groupId>
             <artifactId>postgis-jdbc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>net.postgis</groupId>
+            <artifactId>postgis-geometry</artifactId>
+            <version>2021.1.0</version>
         </dependency>
     </dependencies>
 

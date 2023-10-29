@@ -21,11 +21,19 @@
 		<module>order-service</module>
 		<module>delivery-service</module>
 		<module>kitchen-service</module>
+		<module>migration</module>
 	</modules>
 
 	<properties>
 		<java.version>11</java.version>
 	</properties>
+	<dependencies>
+		<dependency>
+			<groupId>net.postgis</groupId>
+			<artifactId>postgis-geometry</artifactId>
+			<version>2021.1.0</version>
+		</dependency>
+	</dependencies>
 
 
 </project>
