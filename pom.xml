@@ -13,7 +13,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>liga_education</name>
-	<description>Liga Education</description>
+	<description>LigaEducation</description>
 
 	<modules>
 		<module>dependency_bom</module>
@@ -26,5 +26,6 @@
 	<properties>
 		<java.version>11</java.version>
 	</properties>
+
 
 </project>

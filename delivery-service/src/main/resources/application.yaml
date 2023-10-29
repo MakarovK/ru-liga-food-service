@@ -1,7 +1,7 @@
 management:
 endpoints:
 web:
-server.port: 8080
+server.port: 8086
 exposure:
 include: "*" #<2>
 endpoint:

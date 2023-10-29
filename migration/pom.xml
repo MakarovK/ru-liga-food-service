@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>ru.liga</groupId>
+        <artifactId>dependency_bom</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+        <relativePath>../dependency_bom/pom.xml</relativePath>
+    </parent>
+
+    <artifactId>migration</artifactId>
+    <packaging>pom</packaging>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>net.postgis</groupId>
+            <artifactId>postgis-jdbc</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.liquibase</groupId>
+                <artifactId>liquibase-maven-plugin</artifactId>
+                <version>4.24.0</version>
+                <configuration>
+                    <propertyFile>${profile.propertyFile}</propertyFile>
+                    <changeLogFile>${profile.propertyFile}</changeLogFile>
+                    <dataDir>${profile.dataDir}</dataDir>
+                    <changelogShemaName>${profile.changelogShemaName}</changelogShemaName>
+                    <verbose>${profile.verbose}</verbose>
+                    <logging>${profile.logging}</logging>
+                    <promtOnNonLocalDatabase>false</promtOnNonLocalDatabase>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>local</id>
+            <activation>
+                <property>
+                    <name>env</name>
+                    <value>local</value>
+                </property>
+            </activation>
+            <properties>
+                <profile.propertyFile>src/main/resources/db/local/liquibase.properties</profile.propertyFile>
+                <profile.changeLogFile>src/main/resources/db/master.xml</profile.changeLogFile>
+                <profile.dataDir>src/main/resources/db/local/data</profile.dataDir>
+                <profile.changelogShemaName>public</profile.changelogShemaName>
+                <!-- Log !-->
+                <profile.verbose>false</profile.verbose>
+                <profile.logging>debug</profile.logging>
+            </properties>
+        </profile>
+
+    </profiles>
+
+</project>
