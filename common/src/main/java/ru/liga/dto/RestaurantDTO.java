@@ -17,4 +17,6 @@ public class RestaurantDTO {
     private List<RestaurantMenuItem> restaurantMenuItems;
 
     private KitchenStatus kitchenStatus;
+
+    private String coordinates;
 }

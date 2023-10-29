@@ -21,16 +21,18 @@ public class KitchenController {
      *
      * @return Список объектов OrderDTO, представляющих текущие заказы.
      */
-    @GetMapping("/{restaurant_id}/orders")
-    public List<OrderDTO> getAllCurrentOrders(@PathVariable("restaurant_id") Long restaurant_id) {
-        return kitchenFeignService.getAllCurrentOrders(restaurant_id);
+    @GetMapping("/{restaurant_id}/preparing-orders")
+    public List<OrderDTO> getAllPreparingOrders(@PathVariable("restaurant_id") Long restaurant_id) {
+        return kitchenFeignService.getAllPreparingOrders(restaurant_id);
+    }
+    @GetMapping("/{restaurant_id}/created-orders")
+    public List<OrderDTO> getAllCreatedOrders(@PathVariable("restaurant_id") Long restaurant_id) {
+        return kitchenFeignService.getAllCreatedOrders(restaurant_id);
     }
 
     @PutMapping("/{restaurant_id}/accept/{order_id}")
     public String acceptOrder(@PathVariable("order_id") Long id, @PathVariable("restaurant_id") Long restaurant_id) {
         kitchenFeignService.acceptOrder(id, restaurant_id);
-        //Поиск курьера send in Queue и как только он отправляет мессаж о принятии, мы меняем статус заказа на DELIVERY
-        //Синхронное и асинхронное взаимодействие
         return "Заказ принят";
     }
 

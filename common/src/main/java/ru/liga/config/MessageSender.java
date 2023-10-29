@@ -17,4 +17,9 @@ public class MessageSender {
         String orderJson = objectMapper.writeValueAsString(order);
         rabbitTemplate.convertAndSend("Order-queue", orderJson);
     }
+
+    public void sendMessageCourier(String queueName, String routingKey, String message) {
+        rabbitTemplate.convertAndSend(queueName, message);
+
+    }
 }

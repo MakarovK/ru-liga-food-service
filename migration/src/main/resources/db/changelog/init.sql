@@ -2,7 +2,7 @@ create table if not exists couriers
 (
     id bigserial primary key,
     phone varchar(12) not null,
-    status varchar(15) not null default 'active',
+    status varchar(15) not null,
     coordinates geography(Point, 4326)
 );
 
@@ -17,8 +17,9 @@ create table if not exists customers
 create table if not exists restaurants
 (
     id      bigserial primary key,
-    address varchar(50) not null,
-    status  varchar(15) not null default 'active'
+    address varchar(100) not null,
+    status  varchar(15) not null,
+    coordinates geography(Point, 4326)
 );
 
 create table if not exists restaurant_menu_items
@@ -56,7 +57,7 @@ create table if not exists order_items
     foreign key (order_id) references orders (id)
 );
 
-create sequence if not exists hibernate_sequence start 1;
+create sequence if not exists hibernate_sequence start 3;
 
 comment on table couriers is 'Курьеры';
 comment on column couriers.id is 'ID курьера';

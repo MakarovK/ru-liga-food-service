@@ -1,20 +1,39 @@
 package ru.liga.service;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.liga.entity.Order;
+
 
 @Service
 @RequiredArgsConstructor
 public class DeliveryOrderListener {
+    @Autowired
+    private ObjectMapper objectMapper;
+    @RabbitListener(queues = "Delivery-queue-courier1")
+    public void receiveMessageForCourier1(String message) {
+        Order order;
+        try {
+            order = objectMapper.readValue(message, Order.class);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+        System.out.println("Пришёл заказ № " + order.getId() + " для курьера 1. Принять или отклонить заказ?" );
 
-    @RabbitListener(queues = "Delivery-queue")
-    public void recieveOrder(String orderJson) throws JsonProcessingException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        Order order = objectMapper.readValue(orderJson, Order.class);
-        System.out.println("Пришёл заказ с id " + order.getId() + " в ресторан " + order.getRestaurant().getId() + " принять или отклонить?");
+    }
+
+    @RabbitListener(queues = "Delivery-queue-courier2")
+    public void receiveMessageForCourier2(String message) {
+        Order order;
+        try {
+            order = objectMapper.readValue(message, Order.class);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+        System.out.println("Пришёл заказ № " + order.getId() + " для курьера 2. Принять или отклонить заказ?");
     }
 }
+

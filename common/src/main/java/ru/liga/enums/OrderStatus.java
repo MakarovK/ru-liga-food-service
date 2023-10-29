@@ -9,5 +9,4 @@ public enum OrderStatus {
     CREATED,
     DENIED,
     PREPARING,
-
 }

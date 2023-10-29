@@ -1,6 +1,7 @@
 package ru.liga.config;
 
 import org.springframework.amqp.core.AmqpAdmin;
+import org.springframework.amqp.core.DirectExchange;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.annotation.EnableRabbit;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
@@ -40,5 +41,16 @@ public class RabbitMqConfig {
     public Queue orderDeliveryQueue() {
         return new Queue("Delivery-queue");
     }
-
+    @Bean
+    public Queue orderDeliveryQueueCourier1() {
+        return new Queue("Delivery-queue-courier1");
+    }
+    @Bean
+    public Queue orderDeliveryQueueCourier2() {
+        return new Queue("Delivery-queue-courier2");
+    }
+    @Bean
+    public Queue deliveryResponseQueue() {
+        return new Queue("Delivery-queue-response");
+    }
 }

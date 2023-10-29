@@ -43,4 +43,7 @@ public class Restaurant {
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
     private KitchenStatus kitchenStatus;
+
+    @Column(name = "coordinates")
+    private String coordinates;
 }

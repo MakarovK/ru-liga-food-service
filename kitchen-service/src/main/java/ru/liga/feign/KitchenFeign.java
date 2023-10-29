@@ -3,7 +3,6 @@ package ru.liga.feign;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import ru.liga.dto.OrderDTO;
 
@@ -19,9 +18,11 @@ public interface KitchenFeign {
      *
      * @return Список объектов OrderDTO, представляющих текущие заказы.
      */
-    @GetMapping("/feign-kitchen/{restaurant_id}/current-all")
-    List<OrderDTO> getAllCurrentOrders(@PathVariable("restaurant_id") Long id);
+    @GetMapping("/feign-kitchen/{restaurant_id}/preparing")
+    List<OrderDTO> getAllPreparingOrders(@PathVariable("restaurant_id") Long restaurant_id);
 
+    @GetMapping("/feign-kitchen/{restaurant_id}/created")
+    List<OrderDTO> getAllCreatedOrders(@PathVariable("restaurant_id") Long restaurant_id);
     /**
      * Подтверждение заказа. Изменение статуса заказа на PREPARING.
      *
@@ -43,5 +44,7 @@ public interface KitchenFeign {
      * @param id Идентификатор заказа.
      */
     @PutMapping("/feign-kitchen/{restaurant_id}/complete/{order_id}")
-    public void completeOrder(@PathVariable("order_id") Long id, @PathVariable("restaurant_id") Long restaurant_id);
+    void completeOrder(@PathVariable("order_id") Long id, @PathVariable("restaurant_id") Long restaurant_id);
+
+
 }

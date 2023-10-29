@@ -1,16 +1,16 @@
 insert into couriers(id, phone, status, coordinates)
 values
-    (1,'88005553535', 'DENIED', 'point(56.302417 44.029228)'),
-    (2,'+7328839930', 'PICKING', 'point(56.322225 43.881076)');
+    (1,'88005553535', 'ACTIVE', 'point(56.302417 44.029228)'),
+    (2,'+7328839930', 'ACTIVE', 'point(56.322225 43.881076)');
 insert into customers(id, phone, email, address)
 values
     (1, '+73342019232', 'maka73-73@mail.ru', 'г. Уфа, ул. Пушкина, дом Кукушкина'),
     (2, '+75332343232', 'princess21@mail.ru', 'г. Уфа, ул. Носова, дом Альбиносова'),
     (3, '+79543545344', 'tratata@mail.ru', 'г. Уфа, ул. Кимоносова, дом Утконосова');
-insert into restaurants(id, address, status)
+insert into restaurants(id, address, status, coordinates)
 values
-    (1, 'Дом Заварушкина, рядом с домом Кукушкина', 'ACCEPTED'),
-    (2, 'Дом Кукушкинка, рядом с домом Заварушкина', 'REFUNDED');
+    (1, 'ул. Фильченкова, 10, Нижний Новгород, Нижегородская обл., 603002', 'ACCEPTED', 'point(56.32058942989184 43.94633071837609)'),
+    (2, 'улица, Московское ш., 12, Нижний Новгород, Нижегородская обл., 603010', 'REFUNDED', 'point(56.31888109935787 43.92577421166709)');
 insert into restaurant_menu_items(id, restaurant_id, name, price, image, description)
 values
     (1, 1, 'Бургер', 35000, 'Бургер.jpg', 'Вкуснейший бургер с великолепным мясом из Кореи'),

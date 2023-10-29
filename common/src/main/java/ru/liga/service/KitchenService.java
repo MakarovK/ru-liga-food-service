@@ -20,12 +20,17 @@ public class KitchenService {
                 .map(OrderConverter::entityToDto)
                 .collect(Collectors.toList());
     }
-    public List<OrderDTO> getAllCurrentOrders(Long id) {
-        return orderRepository.findAllByRestaurantIdAndStatus(id ,OrderStatus.PREPARING).stream()
+    public List<OrderDTO> getAllPreparingOrders(Long restaurant_id) {
+        return orderRepository.findAllByRestaurantIdAndStatus(restaurant_id ,OrderStatus.PREPARING).stream()
                 .map(OrderConverter::entityToDto)
                 .collect(Collectors.toList());
     }
 
+    public List<OrderDTO> getALLCreatedOrders(Long restaurant_id) {
+        return orderRepository.findAllByRestaurantIdAndStatus(restaurant_id ,OrderStatus.CREATED).stream()
+                .map(OrderConverter::entityToDto)
+                .collect(Collectors.toList());
+    }
     /**
      * Метод для получение CREATED заказов
      * Когда заказ PREPARING, ищу курьера, нахожу курьера ->
@@ -40,9 +45,5 @@ public class KitchenService {
     }
     public void rejectOrder(Long id, Long restaurant_id) {
         orderRepository.save(getOrderByIdAndRestaurantId(id, restaurant_id).setStatus(OrderStatus.DENIED));
-    }
-
-    public void completeOrder(Long id, Long restaurant_id) {
-        orderRepository.save(getOrderByIdAndRestaurantId(id, restaurant_id).setStatus(OrderStatus.COMPLETE));
     }
 }

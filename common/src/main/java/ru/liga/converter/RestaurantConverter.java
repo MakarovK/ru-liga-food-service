@@ -11,13 +11,15 @@ public class RestaurantConverter {
                 .setId(entity.getId())
                 .setAddress(entity.getAddress())
                 .setRestaurantMenuItems(entity.getRestaurantMenuItems())
-                .setKitchenStatus(entity.getKitchenStatus());
+                .setKitchenStatus(entity.getKitchenStatus())
+                .setCoordinates(entity.getCoordinates());
     }
     public static Restaurant dtoToEntity(RestaurantDTO restaurant) {
         return new Restaurant()
                 .setId(restaurant.getId())
                 .setAddress(restaurant.getAddress())
                 .setRestaurantMenuItems(restaurant.getRestaurantMenuItems())
-                .setKitchenStatus(restaurant.getKitchenStatus());
+                .setKitchenStatus(restaurant.getKitchenStatus())
+                .setCoordinates(restaurant.getCoordinates());
     }
 }

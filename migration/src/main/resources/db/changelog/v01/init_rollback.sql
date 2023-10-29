@@ -10,5 +10,5 @@ drop table if exists couriers;
 
 drop table if exists customers;
 
-drop sequence if exists hibernate_sequence;;
+drop sequence if exists hibernate_sequence;
 
