@@ -7,5 +7,5 @@ public enum KitchenStatus {
     ACCEPTED,
     PREPARING,
     DENIED,
-    REFUNDED;
+    REFUNDED
 }

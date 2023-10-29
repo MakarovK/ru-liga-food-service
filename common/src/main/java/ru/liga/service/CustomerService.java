@@ -1,7 +1,9 @@
 package ru.liga.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.liga.config.MessageSender;
 import ru.liga.converter.CustomerConverter;
 import ru.liga.converter.OrderConverter;
 import ru.liga.dto.CustomerDTO;
@@ -24,6 +26,8 @@ public class CustomerService {
     private CustomerRepository customerRepository;
     @Autowired
     private OrderRepository orderRepository;
+    @Autowired
+    private MessageSender messageSender;
 
     private CustomerDTO getCustomerById(Long id) {
         return CustomerConverter.entityToDto(customerRepository.findById(id).orElse(null));
@@ -34,11 +38,12 @@ public class CustomerService {
                 .map(OrderConverter::entityToDto)
                 .collect(Collectors.toList());
     }
-    public void createOrder(Long id, OrderDTO orderDTO) {
+    public Long createOrder(Long id, OrderDTO orderDTO) throws JsonProcessingException {
         orderDTO.setCustomer(CustomerConverter.dtoToEntity(getCustomerById(id)));
         orderDTO.setCourier(null);
         orderDTO.setStatus(OrderStatus.CREATED);
-        orderRepository.save(OrderConverter.dtoToEntity(orderDTO));
+        Order orderRabbit = orderRepository.save(OrderConverter.dtoToEntity(orderDTO));
+        messageSender.createOrder(orderRabbit);
+        return orderRabbit.getId();
     }
-
 }

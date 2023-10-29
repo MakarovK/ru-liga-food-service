@@ -4,7 +4,10 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 public enum OrderStatus {
+    COMPLETE,
+    DELIVERY,
     CREATED,
-    PAID,
-    CANCELED;
+    DENIED,
+    PREPARING,
+
 }

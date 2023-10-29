@@ -18,10 +18,8 @@ values
 insert into orders(id, customer_id,restaurant_id, status, courier_id, timestamp)
 values
     (1, 1, 1, 'CREATED', 1, now()),
-    (2, 2, 2, 'PAID', 2, now());
+    (2, 2, 2, 'CREATED', 2, now());
 insert into order_items(id, order_id, restaurant_menu_item_id, price, quantity)
 values
     (1, 1, 1, 70000, 2),
     (2, 2, 2, 160000, 2);
-
-SELECT * from couriers;

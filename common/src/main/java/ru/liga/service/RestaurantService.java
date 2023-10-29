@@ -11,7 +11,6 @@ import ru.liga.repository.RestaurantRepository;
 public class RestaurantService {
     @Autowired
     public RestaurantRepository restaurantRepository;
-
     public RestaurantDTO getRestaurantById(Long id) {
         return RestaurantConverter.entityToDto(restaurantRepository.findById(id).orElse(null));
     }

@@ -9,5 +9,5 @@ public enum CourierStatus {
     DELIVERING,
     COMPLETE,
     DENIED,
-    REFUNDED;
+    REFUNDED
 }

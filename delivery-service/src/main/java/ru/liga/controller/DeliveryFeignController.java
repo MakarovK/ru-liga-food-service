@@ -23,6 +23,4 @@ public class DeliveryFeignController {
     public Courier getCourierById(@PathVariable("courier_id") Long courier_id) {
         return deliveryFeign.getCourierById(courier_id);
     }
-
-
 }
