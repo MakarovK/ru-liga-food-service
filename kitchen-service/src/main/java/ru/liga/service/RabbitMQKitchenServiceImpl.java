@@ -40,7 +40,7 @@ public class RabbitMQKitchenServiceImpl implements RabbitMQKitchenService {
             String queueName = "Delivery-queue-courier" + courier.getId();
             rabbitTemplate.convertAndSend(queueName, message);
             System.out.println("Отправлен запрос на доставку для курьера " + courier.getId() + " ждём ответ");
-            Message response = rabbitTemplate.receive(replyToQueue, 30_000);
+            Message response = rabbitTemplate.receive(replyToQueue, 2_000);
             if (response != null) {
                 String responseBody = new String(response.getBody());
                 if (responseBody.equals("ACCEPT")) {

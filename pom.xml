@@ -22,6 +22,8 @@
 		<module>delivery-service</module>
 		<module>kitchen-service</module>
 		<module>migration</module>
+		<module>auth-service</module>
+		<module>cloud-gateway</module>
 	</modules>
 
 	<properties>

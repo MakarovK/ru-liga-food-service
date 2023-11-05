@@ -16,6 +16,7 @@ spring:
     password: 'admin'
     url: jdbc:postgresql://localhost:5432/postgres
     username: 'admin'
+
 management:
 endpoints:
 web:

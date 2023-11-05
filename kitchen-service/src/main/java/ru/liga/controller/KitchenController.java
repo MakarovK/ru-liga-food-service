@@ -30,19 +30,19 @@ public class KitchenController {
         return kitchenFeignService.getAllCreatedOrders(restaurant_id);
     }
 
-    @PutMapping("/{restaurant_id}/accept/{order_id}")
+    @GetMapping("/{restaurant_id}/accept/{order_id}")
     public String acceptOrder(@PathVariable("order_id") Long id, @PathVariable("restaurant_id") Long restaurant_id) {
         kitchenFeignService.acceptOrder(id, restaurant_id);
         return "Заказ принят";
     }
 
-    @PutMapping("/{restaurant_id}/reject/{order_id}")
+    @GetMapping("/{restaurant_id}/reject/{order_id}")
     public String rejectOrder(@PathVariable("order_id") Long id, @PathVariable("restaurant_id") Long restaurant_id) {
         kitchenFeignService.rejectOrder(id, restaurant_id);
         return "Заказ отклонён";
     }
 
-    @PutMapping("/{restaurant_id}/complete/{order_id}")
+    @GetMapping("/{restaurant_id}/complete/{order_id}")
     public String completeOrder(@PathVariable("order_id") Long id, @PathVariable("restaurant_id") Long restaurant_id) {
         kitchenFeignService.completeOrder(id, restaurant_id);
         return "Заказ приготовлен";

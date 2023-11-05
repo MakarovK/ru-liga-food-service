@@ -59,6 +59,49 @@ create table if not exists order_items
 
 create sequence if not exists hibernate_sequence start 3;
 
+
+create schema auth;
+
+create table if not exists auth.authorities (
+     username VARCHAR(255) not null,
+     authority varchar(255) not null,
+     primary key (username, authority)
+);
+
+create table if not exists auth.users (
+     username varchar(255) not null,
+     password varchar(255) not null,
+     enabled boolean not null,
+     primary key (username)
+);
+
+create table if not exists auth.user_details (
+    username varchar(255) primary key,
+    password varchar(255),
+    email varchar(255),
+    enabled boolean,
+    account_non_expired boolean,
+    account_non_locked boolean,
+    credentials_non_expired boolean
+);
+
+create table if not exists auth.oauth2_registered_client (
+     id varchar(1000) PRIMARY KEY,
+     client_id VARCHAR(255) NOT NULL,
+     client_id_issued_at TIMESTAMP WITH TIME ZONE,
+     client_secret VARCHAR(255),
+     client_secret_expires_at TIMESTAMP WITH TIME ZONE,
+     client_name VARCHAR(255),
+     client_authentication_methods VARCHAR(255),
+     authorization_grant_types VARCHAR(255),
+     redirect_uris VARCHAR(1000),
+     scopes VARCHAR(1000),
+     client_settings JSONB,
+     token_settings JSONB
+);
+
+
+
 comment on table couriers is 'Курьеры';
 comment on column couriers.id is 'ID курьера';
 comment on column couriers.phone is 'Номер телефона курьера';
