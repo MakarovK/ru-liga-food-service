@@ -1,0 +1,1 @@
+drop table if exist test_table;

@@ -62,42 +62,32 @@ create sequence if not exists hibernate_sequence start 3;
 
 create schema auth;
 
-create table if not exists auth.authorities (
-     username VARCHAR(255) not null,
+create table if not exists authorities (
+     username varchar(255) not null references users,
      authority varchar(255) not null,
-     primary key (username, authority)
+     enabled boolean default true not null
 );
 
-create table if not exists auth.users (
+create table if not exists users (
      username varchar(255) not null,
      password varchar(255) not null,
-     enabled boolean not null,
+     enabled boolean default true not null,
      primary key (username)
 );
 
-create table if not exists auth.user_details (
-    username varchar(255) primary key,
-    password varchar(255),
-    email varchar(255),
-    enabled boolean,
-    account_non_expired boolean,
-    account_non_locked boolean,
-    credentials_non_expired boolean
-);
-
-create table if not exists auth.oauth2_registered_client (
-     id varchar(1000) PRIMARY KEY,
-     client_id VARCHAR(255) NOT NULL,
-     client_id_issued_at TIMESTAMP WITH TIME ZONE,
-     client_secret VARCHAR(255),
-     client_secret_expires_at TIMESTAMP WITH TIME ZONE,
-     client_name VARCHAR(255),
-     client_authentication_methods VARCHAR(255),
-     authorization_grant_types VARCHAR(255),
-     redirect_uris VARCHAR(1000),
-     scopes VARCHAR(1000),
-     client_settings JSONB,
-     token_settings JSONB
+create table if not exists oauth2_registered_client (
+     id varchar(100) not null primary key,
+     client_id varchar(255) not null,
+     client_id_issued_at timestamp default current_timestamp not null,
+     client_secret varchar(255) default null::character varying,
+     client_secret_expires_at timestamp,
+     client_name varchar(255) not null,
+     client_authentication_methods varchar(1000) not null,
+     authorization_grant_types varchar(1000) not null,
+     redirect_uris varchar(1000) default null::character varying,
+     scopes varchar(1000) not null,
+     client_settings varchar(1000) not null,
+     token_settings varchar(1000) not null
 );
 
 

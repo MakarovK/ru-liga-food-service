@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.liga.converter.CourierConverter;
 import ru.liga.dto.CourierDTO;
+import ru.liga.log.Loggable;
 import ru.liga.repository.CourierRepository;
 
 import java.util.List;
@@ -14,7 +15,7 @@ public class CourierService {
 
     @Autowired
     private CourierRepository courierRepository;
-
+    @Loggable
     public List<CourierDTO> getAllCouriers() {
         return courierRepository.findAll().stream()
                 .map(CourierConverter::entityToDto)

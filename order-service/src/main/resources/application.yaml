@@ -17,13 +17,11 @@ spring:
     url: jdbc:postgresql://localhost:5432/postgres
     username: 'admin'
 management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-  server:
-    port: 8080
-    context-path: /orders
-  endpoint:
-    health:
-      show-details: ALWAYS
+endpoints:
+web:
+exposure:
+include: "*"
+server.port: 8084
+endpoint:
+health:
+show-details: ALWAYS

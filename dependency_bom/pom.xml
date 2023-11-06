@@ -21,9 +21,9 @@
         <maven.compiler.target>11</maven.compiler.target>
         <maven.compiler.plugin>3.11.0</maven.compiler.plugin>
         <spring.version>2.7.16</spring.version>
-        <swagger.version>2.2.16</swagger.version>
+        <swagger.version>2.9.2</swagger.version>
         <postgres.version>42.6.0</postgres.version>
-        <liquibase.version>4.24.0</liquibase.version>
+        <liquibase.version>4.11.0</liquibase.version>
         <lombok.version>1.18.30</lombok.version>
         <logging.version>2.7.16</logging.version>
         <yaml.version>2.0</yaml.version>
@@ -36,6 +36,7 @@
         <feign.version>3.1.8</feign.version>
         <jpa.version>3.1.4</jpa.version>
         <java.version>11</java.version>
+        <junit.jupiter.version>5.9.3</junit.jupiter.version>
     </properties>
 
     <dependencyManagement>
@@ -53,6 +54,11 @@
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-web</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-aop</artifactId>
                 <version>${spring.version}</version>
             </dependency>
             <dependency>
@@ -74,11 +80,6 @@
                 <groupId>org.yaml</groupId>
                 <artifactId>snakeyaml</artifactId>
                 <version>${yaml.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.swagger.core.v3</groupId>
-                <artifactId>swagger-annotations</artifactId>
-                <version>${swagger.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework.boot</groupId>
@@ -122,11 +123,6 @@
                 <version>${mybatis-spring.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-starter-openfeign</artifactId>
-                <version>${feign.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-security</artifactId>
                 <version>${spring.version}</version>
@@ -135,11 +131,6 @@
                 <groupId>org.springframework.security</groupId>
                 <artifactId>spring-security-oauth2-authorization-server</artifactId>
                 <version>0.3.0</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-security</artifactId>
-                <version>${spring.version}</version>
             </dependency>
 
             <dependency>
@@ -152,6 +143,47 @@
                 <artifactId>spring-cloud-starter-openfeign</artifactId>
                 <version>${feign.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-engine</artifactId>
+                <version>${junit.jupiter.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-api</artifactId>
+                <version>${junit.jupiter.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.swagger.core.v3</groupId>
+                <artifactId>swagger-annotations</artifactId>
+                <version>2.2.8</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-ui</artifactId>
+                <version>1.6.14</version>
+            </dependency>
+            <dependency>
+                <groupId>com.natpryce</groupId>
+                <artifactId>make-it-easy</artifactId>
+                <version>4.0.1</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-core</artifactId>
+                <version>4.1.0</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-test</artifactId>
+                <version>${spring.version}</version>
+                <scope>test</scope>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 

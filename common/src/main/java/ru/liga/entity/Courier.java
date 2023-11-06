@@ -13,6 +13,8 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 @Accessors(chain = true)
 @Table(name = "couriers")
 public class Courier {

@@ -12,25 +12,18 @@
     </parent>
 
     <artifactId>migration</artifactId>
-    <packaging>pom</packaging>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>migration</name>
 
     <dependencies>
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
         </dependency>
+
         <dependency>
             <groupId>org.liquibase</groupId>
             <artifactId>liquibase-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.postgis</groupId>
-            <artifactId>postgis-jdbc</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>net.postgis</groupId>
-            <artifactId>postgis-geometry</artifactId>
-            <version>2021.1.0</version>
         </dependency>
     </dependencies>
 
@@ -39,40 +32,17 @@
             <plugin>
                 <groupId>org.liquibase</groupId>
                 <artifactId>liquibase-maven-plugin</artifactId>
-                <version>4.24.0</version>
+                <version>4.9.1</version>
+
                 <configuration>
-                    <propertyFile>${profile.propertyFile}</propertyFile>
-                    <changeLogFile>${profile.propertyFile}</changeLogFile>
-                    <dataDir>${profile.dataDir}</dataDir>
-                    <changelogShemaName>${profile.changelogShemaName}</changelogShemaName>
-                    <verbose>${profile.verbose}</verbose>
-                    <logging>${profile.logging}</logging>
-                    <promtOnNonLocalDatabase>false</promtOnNonLocalDatabase>
+                    <changelogSchemaName>public</changelogSchemaName>
+                    <propertyFile>src/main/resources/db/local/liquibase.properties</propertyFile>
+                    <changeLogFile>src/main/resources/db/master.xml</changeLogFile>
+                    <dataDir>src/main/resources/db/local/data</dataDir>
+                    <verbose>false</verbose>
+                    <logging>debugging</logging>
                 </configuration>
             </plugin>
         </plugins>
     </build>
-
-    <profiles>
-        <profile>
-            <id>local</id>
-            <activation>
-                <property>
-                    <name>env</name>
-                    <value>local</value>
-                </property>
-            </activation>
-            <properties>
-                <profile.propertyFile>src/main/resources/db/local/liquibase.properties</profile.propertyFile>
-                <profile.changeLogFile>src/main/resources/db/master.xml</profile.changeLogFile>
-                <profile.dataDir>src/main/resources/db/local/data</profile.dataDir>
-                <profile.changelogShemaName>public</profile.changelogShemaName>
-                <!-- Log !-->
-                <profile.verbose>false</profile.verbose>
-                <profile.logging>debug</profile.logging>
-            </properties>
-        </profile>
-
-    </profiles>
-
 </project>

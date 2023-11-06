@@ -12,6 +12,8 @@ import lombok.experimental.Accessors;
 @Getter
 @Setter
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 @Accessors(chain = true)
 @Table(name = "customers")
 public class Customer {

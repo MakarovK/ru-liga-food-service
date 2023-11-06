@@ -47,6 +47,10 @@ public class KitchenFeignService {
         return kitchenFeign.getAllCreatedOrders(restaurant_id);
     }
 
+    public String def() {
+        return kitchenFeign.def();
+    }
+
     private String jsonOrder(Long id) {
         Order orderDeliveryRequest = orderRepository.findById(id).orElse(null);
         try {

@@ -4,12 +4,11 @@
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 
-    <changeSet id="1" author="kmakarov">
-
-        <sqlFile path="v01/init.sql" relativeToChangelogFile="true"/>
+    <changeSet id="2" author="kmakarov">
+        <sqlFile path="v02/testadd.sql" relativeToChangelogFile="true"/>
 
         <rollback>
-            <sqlFile path="v01/rollback/init_rollback.sql" relativeToChangelogFile="true"/>
+            <sqlFile path="v02/rollback/testadd_rollback.sql" relativeToChangelogFile="true"/>
         </rollback>
     </changeSet>
 </databaseChangeLog>

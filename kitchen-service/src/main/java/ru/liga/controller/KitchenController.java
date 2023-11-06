@@ -16,6 +16,11 @@ public class KitchenController {
     @Autowired
     private KitchenFeignService kitchenFeignService;
 
+    @GetMapping
+    public String def() {
+        return kitchenFeignService.def();
+    }
+
     /**
      * Получение всех текущих заказов.
      *

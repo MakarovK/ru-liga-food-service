@@ -21,6 +21,9 @@ public interface KitchenFeign {
     @GetMapping("/feign-kitchen/{restaurant_id}/preparing")
     List<OrderDTO> getAllPreparingOrders(@PathVariable("restaurant_id") Long restaurant_id);
 
+    @GetMapping
+    String def();
+
     @GetMapping("/feign-kitchen/{restaurant_id}/created")
     List<OrderDTO> getAllCreatedOrders(@PathVariable("restaurant_id") Long restaurant_id);
     /**

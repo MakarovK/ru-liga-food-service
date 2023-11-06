@@ -13,6 +13,7 @@ import ru.liga.entity.Customer;
 import ru.liga.entity.Order;
 import ru.liga.entity.OrderItem;
 import ru.liga.enums.OrderStatus;
+import ru.liga.log.Loggable;
 import ru.liga.repository.CustomerRepository;
 import ru.liga.repository.OrderItemRepository;
 import ru.liga.repository.OrderRepository;
@@ -28,16 +29,17 @@ public class CustomerService {
     private OrderRepository orderRepository;
     @Autowired
     private MessageSender messageSender;
-
-    private CustomerDTO getCustomerById(Long id) {
+    @Loggable
+    public CustomerDTO getCustomerById(Long id) {
         return CustomerConverter.entityToDto(customerRepository.findById(id).orElse(null));
     }
-
+    @Loggable
     public List<OrderDTO> getOrdersByCustomerId(Long id) {
         return orderRepository.findAllByCustomerId(id).stream()
                 .map(OrderConverter::entityToDto)
                 .collect(Collectors.toList());
     }
+    @Loggable
     public Long createOrder(Long id, OrderDTO orderDTO) throws JsonProcessingException {
         orderDTO.setCustomer(CustomerConverter.dtoToEntity(getCustomerById(id)));
         orderDTO.setCourier(null);

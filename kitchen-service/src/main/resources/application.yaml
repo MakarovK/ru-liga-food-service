@@ -1,4 +1,19 @@
+server:
+  port: 8082
+
 spring:
+  application:
+    name: kitchen-service
+  cloud:
+    gateway:
+      routes:
+        - id: kitchen-service
+          uri: http://127.0.0.1:8082
+          predicates:
+            - Path=/kitchen/**
+          filters:
+            - TokenRelay
+            - RemoveRequestHeader=Cookie
   jpa:
     hibernate:
       ddl-auto: none
@@ -16,12 +31,11 @@ spring:
     password: 'admin'
     url: jdbc:postgresql://localhost:5432/postgres
     username: 'admin'
-management:
-endpoints:
-web:
-exposure:
-include: "*"
-server.port: 8082
-endpoint:
-health:
-show-details: ALWAYS
+  management:
+    endpoints:
+      web:
+        exposure:
+          include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS
