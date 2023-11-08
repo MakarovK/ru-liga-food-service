@@ -4,8 +4,6 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 public enum KitchenStatus {
-    ACCEPTED,
-    PREPARING,
-    DENIED,
-    REFUNDED
+    OPEN,
+    CLOSED
 }

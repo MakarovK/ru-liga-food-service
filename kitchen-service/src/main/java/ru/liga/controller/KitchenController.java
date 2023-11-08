@@ -1,11 +1,12 @@
 package ru.liga.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.liga.dto.OrderDTO;
-import ru.liga.service.KitchenFeignService;
+import ru.liga.service.KitchenControllerService;
 
-import java.util.List;
+import javax.validation.constraints.Positive;
+import java.util.UUID;
 
 /**
  * Контроллер для взаимодействия с сервисом кухни.
@@ -13,43 +14,46 @@ import java.util.List;
 @RestController
 @RequestMapping("/kitchen")
 public class KitchenController {
+
+    private final KitchenControllerService kitchenControllerService;
+
     @Autowired
-    private KitchenFeignService kitchenFeignService;
-
-    @GetMapping
-    public String def() {
-        return kitchenFeignService.def();
+    public KitchenController(KitchenControllerService kitchenControllerService) {
+        this.kitchenControllerService = kitchenControllerService;
     }
 
-    /**
-     * Получение всех текущих заказов.
-     *
-     * @return Список объектов OrderDTO, представляющих текущие заказы.
-     */
-    @GetMapping("/{restaurant_id}/preparing-orders")
-    public List<OrderDTO> getAllPreparingOrders(@PathVariable("restaurant_id") Long restaurant_id) {
-        return kitchenFeignService.getAllPreparingOrders(restaurant_id);
-    }
-    @GetMapping("/{restaurant_id}/created-orders")
-    public List<OrderDTO> getAllCreatedOrders(@PathVariable("restaurant_id") Long restaurant_id) {
-        return kitchenFeignService.getAllCreatedOrders(restaurant_id);
+    @GetMapping("/restaurant-menu-items/{id}")
+    public ResponseEntity<?> getRestaurantItemById(@PathVariable("id") @Positive Long id) {
+        return kitchenControllerService.getRestaurantMenuItemById(id);
     }
 
-    @GetMapping("/{restaurant_id}/accept/{order_id}")
-    public String acceptOrder(@PathVariable("order_id") Long id, @PathVariable("restaurant_id") Long restaurant_id) {
-        kitchenFeignService.acceptOrder(id, restaurant_id);
-        return "Заказ принят";
+    @GetMapping("/restaurant/{id}")
+    public ResponseEntity<?> getRestaurantById(@PathVariable("id") @Positive Long id) {
+        return kitchenControllerService.getRestaurantById(id);
     }
 
-    @GetMapping("/{restaurant_id}/reject/{order_id}")
-    public String rejectOrder(@PathVariable("order_id") Long id, @PathVariable("restaurant_id") Long restaurant_id) {
-        kitchenFeignService.rejectOrder(id, restaurant_id);
-        return "Заказ отклонён";
+    @GetMapping("/restaurants")
+    public ResponseEntity<?> getRestaurants() {
+        return kitchenControllerService.getRestaurants();
     }
 
-    @GetMapping("/{restaurant_id}/complete/{order_id}")
-    public String completeOrder(@PathVariable("order_id") Long id, @PathVariable("restaurant_id") Long restaurant_id) {
-        kitchenFeignService.completeOrder(id, restaurant_id);
-        return "Заказ приготовлен";
+    @GetMapping("/restaurant-menu-items/{id}/price")
+    public ResponseEntity<?> getPrice(@PathVariable("id") Long id) {
+        return kitchenControllerService.getPriceByRestaurantMenuItemId(id);
+    }
+
+    @PutMapping("/restaurant/{uuid}/accept")
+    public ResponseEntity<?> acceptOrder(@PathVariable("uuid") UUID uuid) {
+        return ResponseEntity.ok(kitchenControllerService.acceptOrder(uuid));
+    }
+
+    @PutMapping("/restaurant/{uuid}/deny")
+    public ResponseEntity<?> denyOrder(@PathVariable("uuid") UUID uuid) {
+        return ResponseEntity.ok(kitchenControllerService.denyOrder(uuid));
+    }
+
+    @PutMapping("/restaurant/{uuid}/complete")
+    public ResponseEntity<?> completeOrder(@PathVariable("uuid") UUID uuid) {
+        return ResponseEntity.ok(kitchenControllerService.completeOrder(uuid));
     }
 }

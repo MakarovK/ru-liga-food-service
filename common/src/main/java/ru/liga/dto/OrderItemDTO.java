@@ -1,15 +1,16 @@
 package ru.liga.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
-import ru.liga.entity.Order;
-import ru.liga.entity.RestaurantMenuItem;
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Accessors(chain = true)
 public class OrderItemDTO {
-    private long Id;
-    private Order order_id;
-    private RestaurantMenuItem restaurantMenuItem_id;
+    private long id;
+    private Long restaurantMenuItemId;
     private Integer price;
     private Integer quantity;
 }

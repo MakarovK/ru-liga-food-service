@@ -11,7 +11,8 @@ create table if not exists customers
     id bigserial primary key,
     phone varchar(12) not null,
     email varchar(50) not null,
-    address varchar(50) not null
+    address varchar(50) not null,
+    coordinates geography(Point, 4326)
 );
 
 create table if not exists restaurants
@@ -36,10 +37,10 @@ create table if not exists restaurant_menu_items
 
 create table if not exists orders
 (
-    id            bigserial primary key,
+    id            uuid primary key default gen_random_uuid(),
     customer_id   bigint      not null,
     restaurant_id bigint      not null,
-    status        varchar(15) not null default 'active',
+    status        varchar(30) not null default 'active',
     courier_id    bigint,
     timestamp     timestamp   not null default now(),
     foreign key (courier_id) references couriers (id),
@@ -49,7 +50,7 @@ create table if not exists orders
 create table if not exists order_items
 (
     id            bigserial primary key,
-    order_id      bigint  not null,
+    order_id      uuid not null,
     restaurant_menu_item_id bigint  not null unique,
     price         integer not null,
     quantity      integer not null default 1,

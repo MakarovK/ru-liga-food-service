@@ -11,7 +11,7 @@ spring:
           envers:
             revision_field_name: rev_id
             revision_type_field_name: rev_type
-    show-sql: 'true'
+    show-sql: 'false'
   datasource:
     password: 'admin'
     url: jdbc:postgresql://localhost:5432/postgres

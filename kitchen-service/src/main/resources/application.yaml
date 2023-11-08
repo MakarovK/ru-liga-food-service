@@ -4,16 +4,6 @@ server:
 spring:
   application:
     name: kitchen-service
-  cloud:
-    gateway:
-      routes:
-        - id: kitchen-service
-          uri: http://127.0.0.1:8082
-          predicates:
-            - Path=/kitchen/**
-          filters:
-            - TokenRelay
-            - RemoveRequestHeader=Cookie
   jpa:
     hibernate:
       ddl-auto: none
@@ -26,7 +16,7 @@ spring:
           envers:
             revision_field_name: rev_id
             revision_type_field_name: rev_type
-    show-sql: 'true'
+    show-sql: 'false'
   datasource:
     password: 'admin'
     url: jdbc:postgresql://localhost:5432/postgres

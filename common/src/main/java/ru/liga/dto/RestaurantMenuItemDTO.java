@@ -1,13 +1,15 @@
 package ru.liga.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
-import ru.liga.entity.Restaurant;
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Accessors(chain = true)
 public class RestaurantMenuItemDTO {
     private Long id;
-    private Restaurant restaurant_id;
     private String name;
     private Integer price;
     private String image;

@@ -1,23 +1,25 @@
 package ru.liga.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
-import ru.liga.entity.Courier;
-import ru.liga.entity.Customer;
-import ru.liga.entity.OrderItem;
-import ru.liga.entity.Restaurant;
 import ru.liga.enums.OrderStatus;
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.UUID;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Accessors(chain = true)
 public class OrderDTO {
-    private Long Id;
-    private Customer customer;
-    private Restaurant restaurant;
+    private UUID id;
+    private CustomerDTO customer;
+    private RestaurantDTO restaurant;
     private OrderStatus status;
-    private Courier courier;
-    private List<OrderItem> orderItems;
+    private CourierDTO courier;
+    private List<OrderItemDTO> orderItems;
     private Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+
 }
