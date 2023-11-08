@@ -27,6 +27,12 @@ public class OrderListener {
                 System.out.println("Ваш заказ с ID " + orderDTO.getId() + " начали готовить");
             } else if (orderDTO.getStatus() == OrderStatus.KITCHEN_COMPLETE) {
                 System.out.println("Ваш заказ с ID " + orderDTO.getId() + " готов, ищем курьера");
+            } else if (orderDTO.getStatus() == OrderStatus.DELIVERY_PICKING) {
+                System.out.println("Ваш заказ с ID " + orderDTO.getId() + " в доставке");
+            } else if (orderDTO.getStatus() == OrderStatus.DELIVERY_DENIED) {
+                System.out.println("Для вашего заказа с ID " + orderDTO.getId() + " курьер не найден");
+            } else if (orderDTO.getStatus() == OrderStatus.DELIVERY_COMPLETE) {
+                System.out.println("Ваш заказ с ID " + orderDTO.getId() + " доставлен, приятного аппетита!!!");
             }
         } catch (JsonProcessingException e) {
             log.error("Ошибка при обработке JSON", e);

@@ -2,6 +2,7 @@ package ru.liga.rabbitmq.producer;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessageProperties;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -18,6 +19,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Component
+@Slf4j
 public class MessageSender {
     @Autowired
     private RabbitTemplate rabbitTemplate;
@@ -80,7 +82,7 @@ public class MessageSender {
         rabbitTemplate.send("Notification-queue", message);
     }
 
-    public void sendMessageCourier(String queueName, String routingKey, String message) {
+    public void sendMessage(String queueName, String message) {
         rabbitTemplate.convertAndSend(queueName, message);
     }
 
@@ -92,24 +94,26 @@ public class MessageSender {
         for (CourierDTO courierDTO : couriersDTO) {
             if (courierDTO.getStatus().equals(CourierStatus.ACTIVE)) {
                 String queueName = "Delivery-queue-courier" + courierDTO.getId();
+                log.info("Отправка сообщения в очередь " + queueName);
                 rabbitTemplate.convertAndSend(queueName, message);
-                System.out.println("Отправлен запрос на доставку для курьера " + courierDTO.getId() + " ждём ответ");
-                Message response = rabbitTemplate.receive(replyToQueue, 20_000);
+                log.info("Отправлен запрос на доставку для курьера {} - ждём ответ", courierDTO.getId());
+                Message response = rabbitTemplate.receive(replyToQueue, 40_000);
                 if (response != null) {
                     String responseBody = new String(response.getBody());
                     if (responseBody.equals("ACCEPT")) {
                         orderAccepted = true;
                         order.setCourierId(courierDTO.getId());
-                        order.setStatus(OrderStatus.DELIVERY_PICKING);
+                        order.setStatus(OrderStatus.DELIVERY_DELIVERING);
                         orderRepository.save(order);
-                        System.out.println("Заказ принят курьером " + courierDTO.getId());
+                        log.info("Заказ принят курьером {}", courierDTO.getId());
                         break;
                     }
                 }
-                if (!orderAccepted) {
-                    System.out.println("Курьер не найден");
-                }
             }
+        }
+
+        if (!orderAccepted) {
+            log.warn("Курьер не найден");
         }
     }
 }

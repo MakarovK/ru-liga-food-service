@@ -5,8 +5,7 @@ values
 insert into customers(id, phone, email, address, coordinates)
 values
     (1, '+73342019232', 'maka73-73@mail.ru', 'улица Октябрьской Революции, 35', 'point(56.306797 43.936035)'),
-    (2, '+75332343232', 'princess21@mail.ru', 'Ветеринарная улица, 2А', 'point(56.302238 43.989772)'),
-    (3, '+79543545344', 'tratata@mail.ru', 'улица Соревнования, 1', 'point(56.320358 43.977159)');
+    (2, '+75332343232', 'princess21@mail.ru', 'Ветеринарная улица, 2А', 'point(56.302238 43.989772)');
 insert into restaurants(id, address, status, coordinates)
 values
     (1, 'ул. Фильченкова, 10, Нижний Новгород, Нижегородская обл., 603002', 'OPEN', 'point(56.32058942989184 43.94633071837609)'),
@@ -21,7 +20,7 @@ values
     (2, 2, 'KITCHEN_COMPLETE', 2, now());
 insert into order_items(id, order_id, restaurant_menu_item_id, price, quantity)
 values
-    (1,'5c57f81b-f443-4f0b-a5a0-62d1476410ef', 1, 70000, 2),
-    (2,'110a5c22-531d-4f1d-bf38-fd78ddc4ce7f', 2, 160000, 2);
+    (1,'ad2dd0c2-8f67-4651-82d4-9322eea923f9', 1, 70000, 2),
+    (2,'13bb8901-18ce-4095-9f79-95164ac7e626', 2, 160000, 2);
 
 select * from orders;

@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.liga.converter.CourierConverter;
 import ru.liga.dto.CourierDTO;
-import ru.liga.entity.Courier;
+import ru.liga.feign.OrderFeignDelivery;
 import ru.liga.repository.CourierRepository;
 
 import java.util.List;
@@ -17,6 +17,9 @@ import java.util.stream.Collectors;
 public class CourierControllerService {
     @Autowired
     private RabbitMQDeliveryServiceImpl rabbitMQDeliveryService;
+
+    @Autowired
+    private OrderFeignDelivery orderFeignDelivery;
 
     @Autowired
     private CourierRepository courierRepository;
@@ -31,14 +34,32 @@ public class CourierControllerService {
         return CourierConverter.entityToDto(courierRepository.getById(id));
     }
 
-    public void acceptOrder(Long courier_id, UUID uuid) {
+    public String acceptOrder(Long courier_id, UUID uuid) {
         if (courier_id == 1) {
             rabbitMQDeliveryService.sendMessage("ACCEPT");
-            System.out.println("Заказ принят курьером № 1");
+            log.info("Заказ принят курьером № 1");
         }
         if (courier_id == 2) {
             rabbitMQDeliveryService.sendMessage("ACCEPT");
-            System.out.println("Заказ принят курьером № 2");
+            log.info("Заказ принят курьером № 2");
         }
+        return orderFeignDelivery.courierAcceptOrder(uuid);
+    }
+
+    public String denyOrder(Long courier_id, UUID uuid) {
+        if (courier_id == 1) {
+            rabbitMQDeliveryService.sendMessage("DENY");
+            log.info("Заказ отклонён курьером № 1");
+        }
+        if (courier_id == 2) {
+            rabbitMQDeliveryService.sendMessage("DENY");
+            log.info("Заказ отклонён курьером № 2");
+        }
+        return orderFeignDelivery.courierDenyOrder(uuid);
+    }
+
+    public String completeOrder(Long courierId, UUID uuid) {
+        log.info("Заказ № {} доставлен курьером {}", uuid, courierId);
+        return orderFeignDelivery.courierCompleteOrder(uuid);
     }
 }

@@ -19,6 +19,8 @@ import lombok.experimental.Accessors;
 public class Customer {
     /**
      * Уникальный идентификатор клиента.
+     *
+     * @return Уникальный идентификатор клиента.
      */
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -26,23 +28,33 @@ public class Customer {
 
     /**
      * Телефон клиента.
+     *
+     * @return Телефон клиента.
      */
     @Column(name = "phone")
     private String phone;
 
     /**
      * Email клиента.
+     *
+     * @return Email клиента.
      */
     @Column(name = "email")
     private String email;
 
     /**
      * Адрес клиента.
+     *
+     * @return Адрес клиента.
      */
     @Column(name = "address")
     private String address;
 
+    /**
+     * Координаты клиента.
+     *
+     * @return Координаты клиента.
+     */
     @Column(name = "coordinates")
     private String coordinates;
 }
-

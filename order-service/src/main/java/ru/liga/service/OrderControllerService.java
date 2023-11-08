@@ -171,8 +171,10 @@ public class OrderControllerService {
                 log.error("Заказ с UUID " + uuid + " не найден.");
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Заказ не найден");
             }
-
-            if (!order.getStatus().equals(OrderStatus.CUSTOMER_PAID)) {
+            if (order.getStatus().equals(OrderStatus.KITCHEN_DENIED)) {
+                log.info("Заказ с UUID " + uuid + " уже отклонён.");
+                return ResponseEntity.ok("Заказ уже был отклонён кухней ранее");
+            } else if (!order.getStatus().equals(OrderStatus.CUSTOMER_PAID)) {
                 log.error("Заказ с UUID " + uuid + " не может быть отклонен, так как его статус не 'CUSTOMER_PAID'.");
                 return ResponseEntity.ok("На данный момент нельзя отклонить заказ");
             } else {
@@ -199,8 +201,10 @@ public class OrderControllerService {
                 log.error("Заказ с UUID " + uuid + " не найден.");
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Заказ не найден");
             }
-
-            if (!order.getStatus().equals(OrderStatus.CUSTOMER_PAID)) {
+            if (order.getStatus().equals(OrderStatus.KITCHEN_ACCEPTED)) {
+                log.info("Заказ с UUID " + uuid + " уже принят.");
+                return ResponseEntity.ok("Заказ уже был принят кухней ранее");
+            } else if (!order.getStatus().equals(OrderStatus.CUSTOMER_PAID)) {
                 log.error("Заказ с UUID " + uuid + " не может быть принят, так как его статус не 'CUSTOMER_PAID'.");
                 return ResponseEntity.ok("На данный момент нельзя принять заказ");
             } else {
@@ -228,8 +232,10 @@ public class OrderControllerService {
                 log.error("Заказ с UUID " + uuid + " не найден.");
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Заказ не найден");
             }
-
-            if (!order.getStatus().equals(OrderStatus.KITCHEN_ACCEPTED)) {
+            if (order.getStatus().equals(OrderStatus.KITCHEN_COMPLETE)) {
+                log.info("Заказ с UUID " + uuid + " уже готов.");
+                return ResponseEntity.ok("Заказ уже готов, ищем курьера");
+            } else if (!order.getStatus().equals(OrderStatus.KITCHEN_ACCEPTED)) {
                 log.error("Заказ с UUID " + uuid + " нельзя сготовить, так как его не приняли.");
                 return ResponseEntity.ok("Нельзя сготовить заказ в состоянии отличном от принят");
             } else {
@@ -259,17 +265,18 @@ public class OrderControllerService {
                 log.error("Заказ с UUID " + uuid + " не найден.");
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Заказ не найден");
             }
-
-            if (!order.getStatus().equals(OrderStatus.KITCHEN_COMPLETE)) {
+            if (order.getStatus().equals(OrderStatus.DELIVERY_DENIED)) {
+                log.info("Заказ с UUID " + uuid + " отклонён курьерской службой");
+                return ResponseEntity.ok("Заказ отклонён курьерской службой");
+            } else if (!order.getStatus().equals(OrderStatus.KITCHEN_COMPLETE)) {
                 log.error("Заказ с UUID " + uuid + " нельзя отказаться, заказ ещё не готов.");
                 return ResponseEntity.ok("Нельзя отказаться от заказа, он не готов");
             } else {
                 order.setStatus(OrderStatus.DELIVERY_DENIED);
                 orderRepository.save(order);
-                messageSender.sendMessageForDelivery(objectMapper.writeValueAsString(orderConverter.entityToDto(order))
-                        , courierFeign.getAllCouriers(), order.getId());
+                messageSender.sendMessage("Customer-queue", objectMapper.writeValueAsString(orderConverter.entityToDto(order)));
                 log.info("Заказ с UUID " + uuid + " был отклонён курьером " + order.getCourierId());
-                return ResponseEntity.ok("Заказ в доставке");
+                return ResponseEntity.ok("Заказ был отклонён курьером");
             }
         } catch (EntityNotFoundException ex) {
             log.error("Заказ не найден: " + ex.getMessage(), ex);
@@ -279,6 +286,7 @@ public class OrderControllerService {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Произошла ошибка при взятии заказа в доставку: " + ex.getMessage());
         }
     }
+
     public ResponseEntity<?> courierAcceptOrder(UUID uuid) {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
@@ -289,14 +297,16 @@ public class OrderControllerService {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Заказ не найден");
             }
 
-            if (!order.getStatus().equals(OrderStatus.KITCHEN_COMPLETE)) {
+            if (order.getStatus().equals(OrderStatus.DELIVERY_DELIVERING)) {
+                log.info("Заказ с UUID " + uuid + " уже в доставке");
+                return ResponseEntity.ok("Заказ уже в доставке");
+            } else if (!order.getStatus().equals(OrderStatus.DELIVERY_DELIVERING)) {
                 log.error("Заказ с UUID " + uuid + " нельзя принять т.к. заказ еще не готов.");
                 return ResponseEntity.ok("Нельзя принять заказ, он не готов");
             } else {
                 order.setStatus(OrderStatus.DELIVERY_DELIVERING);
                 orderRepository.save(order);
-                messageSender.sendMessageForDelivery(objectMapper.writeValueAsString(orderConverter.entityToDto(order))
-                        , courierFeign.getAllCouriers(), order.getId());
+                messageSender.sendMessage("Customer-queue", objectMapper.writeValueAsString(orderConverter.entityToDto(order)));
                 log.info("Заказ с UUID " + uuid + " был взят на доставку курьером " + order.getCourierId());
                 return ResponseEntity.ok("Заказ в доставке");
             }
@@ -308,6 +318,7 @@ public class OrderControllerService {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Произошла ошибка при взятии заказа в доставку: " + ex.getMessage());
         }
     }
+
     public ResponseEntity<?> courierCompleteOrder(UUID uuid) {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
@@ -318,14 +329,16 @@ public class OrderControllerService {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Заказ не найден");
             }
 
-            if (!order.getStatus().equals(OrderStatus.DELIVERY_DELIVERING)) {
+            if (order.getStatus().equals(OrderStatus.DELIVERY_COMPLETE)) {
+                log.info("Заказ с UUID " + uuid + " уже завершён");
+                return ResponseEntity.ok("Заказ уже завершён");
+            } else if (!order.getStatus().equals(OrderStatus.DELIVERY_DELIVERING)) {
                 log.error("Заказ с UUID " + uuid + " нельзя завершить заказ, он не в доставке.");
-                return ResponseEntity.ok("Нельзя отказаться от заказа, он не готов");
+                return ResponseEntity.ok("Нельзя завершить заказ, он не в доставке.");
             } else {
                 order.setStatus(OrderStatus.DELIVERY_COMPLETE);
                 orderRepository.save(order);
-                messageSender.sendMessageForDelivery(objectMapper.writeValueAsString(orderConverter.entityToDto(order))
-                        , courierFeign.getAllCouriers(), order.getId());
+                messageSender.sendMessage("Customer-queue", objectMapper.writeValueAsString(orderConverter.entityToDto(order)));
                 log.info("Заказ с UUID " + uuid + " доставлен курьером " + order.getCourierId());
                 return ResponseEntity.ok("Заказ доставлен");
             }

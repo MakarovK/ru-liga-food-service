@@ -14,6 +14,7 @@ public class DeliveryController {
     @Autowired
     private CourierControllerService courierControllerService;
 
+
     @GetMapping("/{courier_id}")
     public CourierDTO getCourierById(@PathVariable("courier_id") Long courierId) {
         return courierControllerService.getCourierById(courierId);
@@ -25,9 +26,17 @@ public class DeliveryController {
     }
 
     @PutMapping("/{courier_id}/accept/{order_id}")
-    public String acceptOrder(@PathVariable("courier_id") Long courier_id, @PathVariable("order_id") UUID order_id) {
-        courierControllerService.acceptOrder(courier_id, order_id);
-        return "Заказ принят";
+    public String acceptOrder(@PathVariable("courier_id") Long courierId, @PathVariable("order_id") UUID orderId) {
+        return courierControllerService.acceptOrder(courierId, orderId);
+    }
+
+    @PutMapping("/{courier_id}/deny/{order_id}")
+    public String denyOrder(@PathVariable("courier_id") Long courierId, @PathVariable("order_id") UUID orderId) {
+        return courierControllerService.denyOrder(courierId, orderId);
+    }
+
+    @PutMapping("/{courier_id}/complete/{order_id}")
+    public String completeOrder(@PathVariable("courier_id") Long courierId, @PathVariable("order_id") UUID orderId) {
+        return courierControllerService.completeOrder(courierId, orderId);
     }
 }
-//, @PathVariable("order_id") Long order_id
