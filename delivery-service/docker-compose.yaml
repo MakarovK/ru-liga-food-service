@@ -1,0 +1,22 @@
+version: '3'
+services:
+  delivery-service:
+    build:
+      dockerfile: Dockerfile
+    ports:
+      - 8083:8083
+    depends_on:
+      - db
+    environment:
+      - DATABASE_URL=jdbc:postgresql://db:5432/postgres
+      - DATABASE_USERNAME=admin
+      - DATABASE_PASSWORD=admin
+
+  db:
+    image: postgres
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin

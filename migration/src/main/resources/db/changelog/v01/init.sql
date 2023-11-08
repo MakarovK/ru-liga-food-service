@@ -22,6 +22,7 @@ create table if not exists restaurants
     status  varchar(15) not null,
     coordinates geography(Point, 4326)
 );
+select version();
 
 create table if not exists restaurant_menu_items
 (

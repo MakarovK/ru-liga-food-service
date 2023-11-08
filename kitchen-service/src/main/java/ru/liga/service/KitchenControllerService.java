@@ -7,10 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import ru.liga.converter.RestaurantConverter;
 import ru.liga.converter.RestaurantMenuItemConverter;
-import ru.liga.dto.OrderDTO;
 import ru.liga.entity.Restaurant;
 import ru.liga.entity.RestaurantMenuItem;
-import ru.liga.enums.OrderStatus;
 import ru.liga.feign.OrderFeign;
 import ru.liga.repository.RestaurantMenuItemRepository;
 import ru.liga.repository.RestaurantRepository;
@@ -18,6 +16,9 @@ import ru.liga.repository.RestaurantRepository;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Сервис для управления кухней ресторана.
+ */
 @Service
 @Slf4j
 public class KitchenControllerService {
@@ -30,8 +31,12 @@ public class KitchenControllerService {
     @Autowired
     private OrderFeign orderFeign;
 
-
-
+    /**
+     * Получить информацию о блюде по его Id.
+     *
+     * @param id Id блюда.
+     * @return Возвращает информацию о блюде в формате ResponseEntity.
+     */
     public ResponseEntity<?> getRestaurantMenuItemById(Long id) {
         try {
             log.info("Запрошено блюдо с ID: {}", id);
@@ -49,6 +54,12 @@ public class KitchenControllerService {
         }
     }
 
+    /**
+     * Получить информацию о ресторане по его Id.
+     *
+     * @param id Id ресторана.
+     * @return Возвращает информацию о ресторане в формате ResponseEntity.
+     */
     public ResponseEntity<?> getRestaurantById(Long id) {
         try {
             log.info("Запрошен ресторан с ID: {}", id);
@@ -66,6 +77,11 @@ public class KitchenControllerService {
         }
     }
 
+    /**
+     * Получить список всех ресторанов.
+     *
+     * @return Возвращает список ресторанов в формате ResponseEntity.
+     */
     public ResponseEntity<?> getRestaurants() {
         try {
             log.info("Запрошен список ресторанов");
@@ -83,6 +99,12 @@ public class KitchenControllerService {
         }
     }
 
+    /**
+     * Получить цену блюда по его Id.
+     *
+     * @param id Id блюда.
+     * @return Возвращает цену блюда в формате ResponseEntity.
+     */
     public ResponseEntity<?> getPriceByRestaurantMenuItemId(Long id) {
         try {
             log.info("Запрошена цена блюда");
@@ -101,14 +123,33 @@ public class KitchenControllerService {
         }
     }
 
+    /**
+     * Отклонить заказ по его UUID.
+     *
+     * @param uuid Id заказа.
+     * @return Возвращает строку с результатом операции.
+     */
     public String denyOrder(UUID uuid) {
         return orderFeign.denyOrder(uuid);
     }
+
+    /**
+     * Принять заказ по его UUID.
+     *
+     * @param uuid Id заказа.
+     * @return Возвращает строку с результатом операции.
+     */
     public String acceptOrder(UUID uuid) {
         return orderFeign.acceptOrder(uuid);
     }
+
+    /**
+     * Завершить заказ по его UUID.
+     *
+     * @param uuid Id заказа.
+     * @return Возвращает строку с результатом операции.
+     */
     public String completeOrder(UUID uuid) {
         return orderFeign.completeOrder(uuid);
     }
-
 }

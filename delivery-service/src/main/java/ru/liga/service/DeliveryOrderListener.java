@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.liga.entity.Order;
+import ru.liga.dto.OrderDTO;
 
 
 @Service
@@ -15,9 +15,9 @@ public class DeliveryOrderListener {
     private ObjectMapper objectMapper;
     @RabbitListener(queues = "Delivery-queue-courier1")
     public void receiveMessageForCourier1(String message) {
-        Order order;
+        OrderDTO order;
         try {
-            order = objectMapper.readValue(message, Order.class);
+            order = objectMapper.readValue(message, OrderDTO.class);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
@@ -27,9 +27,9 @@ public class DeliveryOrderListener {
 
     @RabbitListener(queues = "Delivery-queue-courier2")
     public void receiveMessageForCourier2(String message) {
-        Order order;
+        OrderDTO order;
         try {
-            order = objectMapper.readValue(message, Order.class);
+            order = objectMapper.readValue(message, OrderDTO.class);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }

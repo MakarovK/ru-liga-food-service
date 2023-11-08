@@ -12,6 +12,9 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+/**
+ * Сервис для управления курьерами и доставкой.
+ */
 @Service
 @Slf4j
 public class CourierControllerService {
@@ -24,16 +27,34 @@ public class CourierControllerService {
     @Autowired
     private CourierRepository courierRepository;
 
+    /**
+     * Получить список всех курьеров.
+     *
+     * @return Возвращает список курьеров в формате List&lt;CourierDTO&gt;.
+     */
     public List<CourierDTO> getAllCouriers() {
         return courierRepository.findAll().stream()
                 .map(CourierConverter::entityToDto)
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Получить информацию о курьере по его Id.
+     *
+     * @param id Id курьера.
+     * @return Возвращает информацию о курьере в формате CourierDTO.
+     */
     public CourierDTO getCourierById(Long id) {
         return CourierConverter.entityToDto(courierRepository.getById(id));
     }
 
+    /**
+     * Принять заказ и отправить подтверждение доставки.
+     *
+     * @param courier_id Id курьера.
+     * @param uuid        Id заказа.
+     * @return Возвращает строку с результатом операции.
+     */
     public String acceptOrder(Long courier_id, UUID uuid) {
         if (courier_id == 1) {
             rabbitMQDeliveryService.sendMessage("ACCEPT");
@@ -46,6 +67,13 @@ public class CourierControllerService {
         return orderFeignDelivery.courierAcceptOrder(uuid);
     }
 
+    /**
+     * Отклонить заказ и отправить уведомление.
+     *
+     * @param courier_id Id курьера.
+     * @param uuid        Id заказа.
+     * @return Возвращает строку с результатом операции.
+     */
     public String denyOrder(Long courier_id, UUID uuid) {
         if (courier_id == 1) {
             rabbitMQDeliveryService.sendMessage("DENY");
@@ -58,6 +86,13 @@ public class CourierControllerService {
         return orderFeignDelivery.courierDenyOrder(uuid);
     }
 
+    /**
+     * Завершить заказ и отправить уведомление.
+     *
+     * @param courierId Id курьера.
+     * @param uuid       Id заказа.
+     * @return Возвращает строку с результатом операции.
+     */
     public String completeOrder(Long courierId, UUID uuid) {
         log.info("Заказ № {} доставлен курьером {}", uuid, courierId);
         return orderFeignDelivery.courierCompleteOrder(uuid);

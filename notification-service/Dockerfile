@@ -1,11 +1,11 @@
 FROM openjdk:11-jre-slim
 
 WORKDIR /app
-COPY target/*.jar /app/delivery-service.jar
+COPY target/*.jar /app/notification-service.jar
 
 ENV DATABASE_URL jdbc:postgresql://db:5432/postgres
 ENV DATABASE_USERNAME admin
 ENV DATABASE_PASSWORD admin
 
-CMD ["java", "-jar", "/app/delivery-service.jar"]
+CMD ["java", "-jar", "/app/notification-service.jar"]
 

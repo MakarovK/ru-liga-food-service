@@ -29,6 +29,7 @@ import java.util.UUID;
 @Service
 @Slf4j
 public class OrderControllerService {
+
     @Autowired
     private OrderRepository orderRepository;
 
@@ -50,26 +51,36 @@ public class OrderControllerService {
     @Autowired
     private MessageSender messageSender;
 
-
-    public ResponseEntity<?> getOrderById(UUID uuid) {
+    /**
+     * Получить заказ по его Id.
+     *
+     * @param uuId Id заказа.
+     * @return Ответ с данными о заказе.
+     */
+    public ResponseEntity<?> getOrderById(UUID uuId) {
         try {
-            log.info("Запрошен заказ с ID: {}", uuid);
-            Order order = orderRepository.findByUUID(uuid);
+            log.info("Запрошен заказ с ID: {}", uuId);
+            Order order = orderRepository.findByUUID(uuId);
             if (order != null) {
                 log.info("Заказ найден: {}", orderConverter.entityToDto(order));
                 return ResponseEntity.ok(orderConverter.entityToDto(order));
             } else {
-                log.warn("Заказ с ID {} не найден.", uuid);
+                log.warn("Заказ с ID {} не найден.", uuId);
                 return ResponseEntity.notFound().build();
             }
         } catch (Exception ex) {
             log.error("Произошла ошибка: " + ex.getMessage(), ex);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Произошла ошибка: " + ex.getMessage());
         }
-
     }
 
-    private RestaurantDTO getNearestRestaurant(Long customerId) {
+    /**
+     * Получить ближайший ресторан к клиенту.
+     *
+     * @param customerId Idклиента.
+     * @return Данные о ближайшем ресторане.
+     */
+    public RestaurantDTO getNearestRestaurant(Long customerId) {
         try {
             List<RestaurantDTO> restaurants = kitchenFeign.getRestaurants();
             Customer customer = customerRepository.findById(customerId).orElse(null);
@@ -103,11 +114,24 @@ public class OrderControllerService {
         }
     }
 
+    /**
+     * Рассчитать стоимость заказа.
+     *
+     * @param orderItemDTO Элемент заказа.
+     * @return Стоимость элемента заказа.
+     */
     private Integer calculatePrice(OrderItemDTO orderItemDTO) {
         return kitchenFeign.getPriceByRestaurantMenuItemId(orderItemDTO.getRestaurantMenuItemId()) * orderItemDTO.getQuantity();
     }
 
-    public ResponseEntity<?> createOrder(Long id, OrderDTO orderDTO) {
+    /**
+     * Создать новый заказ для клиента.
+     *
+     * @param Id       Idклиента.
+     * @param orderDTO Данные нового заказа.
+     * @return Ответ с информацией о созданном заказе.
+     */
+    public ResponseEntity<?> createOrder(Long Id, OrderDTO orderDTO) {
         try {
             List<OrderItemDTO> orderItems = orderDTO.getOrderItems();
             for (int i = 0; i < orderItems.size(); i++) {
@@ -116,10 +140,10 @@ public class OrderControllerService {
             }
             UUID orderId = UUID.randomUUID();
             orderDTO.setId(orderId)
-                    .setCustomer(CustomerConverter.entityToDto(customerRepository.findById(id).orElse(null)))
+                    .setCustomer(CustomerConverter.entityToDto(customerRepository.findById(Id).orElse(null)))
                     .setCourier(null)
                     .setStatus(OrderStatus.CUSTOMER_CREATED)
-                    .setRestaurant(getNearestRestaurant(id))
+                    .setRestaurant(getNearestRestaurant(Id))
                     .setOrderItems(orderItems);
             log.info("Создан новый заказ с ID: {}", orderId);
             Order order = orderRepository.save(orderConverter.dtoToEntity(orderDTO));
@@ -132,56 +156,68 @@ public class OrderControllerService {
         }
     }
 
-    public ResponseEntity<?> paymentOrder(UUID uuid) {
+    /**
+     * Оплатить заказ по его Id.
+     *
+     * @param uuId Idзаказа для оплаты.
+     * @return Ответ с результатом оплаты заказа.
+     */
+    public ResponseEntity<?> paymentOrder(UUID uuId) {
         try {
-            Order order = orderRepository.findByUUID(uuid);
+            Order order = orderRepository.findByUUID(uuId);
 
             if (order == null) {
-                log.error("Заказ с UUID " + uuid + " не найден.");
+                log.error("Заказ с UUID " + uuId + " не найден.");
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Заказ не найден");
             }
 
             if (order.getStatus().equals(OrderStatus.CUSTOMER_PAID)) {
-                log.info("Заказ с UUID " + uuid + " уже оплачен.");
+                log.info("Заказ с UUID " + uuId + " уже оплачен.");
                 return ResponseEntity.ok("Заказ уже был оплачен");
             } else if (!order.getStatus().equals(OrderStatus.CUSTOMER_CREATED)) {
-                log.error("Нельзя оплатить заказ с UUID " + uuid + " в данном состоянии: " + order.getStatus());
+                log.error("Нельзя оплатить заказ с UUID " + uuId + " в данном состоянии: " + order.getStatus());
                 return ResponseEntity.ok("Нельзя оплатить заказ в данном состоянии");
             } else {
                 order.setStatus(OrderStatus.CUSTOMER_PAID);
                 orderRepository.save(order);
                 messageSender.paymentOrder(orderConverter.entityToDto(order));
-                log.info("Заказ с UUID " + uuid + " успешно оплачен.");
+                log.info("Заказ с UUID " + uuId + " успешно оплачен.");
                 return ResponseEntity.ok("Заказ успешно оплачен");
             }
         } catch (EntityNotFoundException ex) {
-            log.error("Заказ с UUID " + uuid + " не найден: " + ex.getMessage(), ex);
+            log.error("Заказ с UUID " + uuId + " не найден: " + ex.getMessage(), ex);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Заказ не найден");
         } catch (Exception ex) {
-            log.error("Ошибка при оплате заказа с UUID " + uuid + ": " + ex.getMessage(), ex);
+            log.error("Ошибка при оплате заказа с UUID " + uuId + ": " + ex.getMessage(), ex);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Произошла ошибка при оплате заказа: " + ex.getMessage());
         }
     }
 
-    public ResponseEntity<?> denyOrder(UUID uuid) {
+    /**
+     * Отклонить заказ по его Id.
+     *
+     * @param uuId Idзаказа для отклонения.
+     * @return Ответ с результатом отклонения заказа.
+     */
+    public ResponseEntity<?> denyOrder(UUID uuId) {
         try {
-            Order order = orderRepository.findByUUID(uuid);
+            Order order = orderRepository.findByUUID(uuId);
 
             if (order == null) {
-                log.error("Заказ с UUID " + uuid + " не найден.");
+                log.error("Заказ с UUID " + uuId + " не найден.");
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Заказ не найден");
             }
             if (order.getStatus().equals(OrderStatus.KITCHEN_DENIED)) {
-                log.info("Заказ с UUID " + uuid + " уже отклонён.");
+                log.info("Заказ с UUID " + uuId + " уже отклонён.");
                 return ResponseEntity.ok("Заказ уже был отклонён кухней ранее");
             } else if (!order.getStatus().equals(OrderStatus.CUSTOMER_PAID)) {
-                log.error("Заказ с UUID " + uuid + " не может быть отклонен, так как его статус не 'CUSTOMER_PAID'.");
+                log.error("Заказ с UUID " + uuId + " не может быть отклонен, так как его статус не 'CUSTOMER_PAID'.");
                 return ResponseEntity.ok("На данный момент нельзя отклонить заказ");
             } else {
                 order.setStatus(OrderStatus.KITCHEN_DENIED);
                 orderRepository.save(order);
                 messageSender.denyOrder(orderConverter.entityToDto(order));
-                log.info("Заказ с UUID " + uuid + " был отклонен.");
+                log.info("Заказ с UUID " + uuId + " был отклонен.");
                 return ResponseEntity.ok("Заказ отклонен");
             }
         } catch (EntityNotFoundException ex) {
@@ -193,25 +229,31 @@ public class OrderControllerService {
         }
     }
 
-    public ResponseEntity<?> acceptOrder(UUID uuid) {
+    /**
+     * Подтвердить заказ по его Id.
+     *
+     * @param uuId Idзаказа для подтверждения.
+     * @return Ответ с результатом подтверждения заказа.
+     */
+    public ResponseEntity<?> acceptOrder(UUID uuId) {
         try {
-            Order order = orderRepository.findByUUID(uuid);
+            Order order = orderRepository.findByUUID(uuId);
 
             if (order == null) {
-                log.error("Заказ с UUID " + uuid + " не найден.");
+                log.error("Заказ с UUID " + uuId + " не найден.");
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Заказ не найден");
             }
             if (order.getStatus().equals(OrderStatus.KITCHEN_ACCEPTED)) {
-                log.info("Заказ с UUID " + uuid + " уже принят.");
+                log.info("Заказ с UUID " + uuId + " уже принят.");
                 return ResponseEntity.ok("Заказ уже был принят кухней ранее");
             } else if (!order.getStatus().equals(OrderStatus.CUSTOMER_PAID)) {
-                log.error("Заказ с UUID " + uuid + " не может быть принят, так как его статус не 'CUSTOMER_PAID'.");
+                log.error("Заказ с UUID " + uuId + " не может быть принят, так как его статус не 'CUSTOMER_PAID'.");
                 return ResponseEntity.ok("На данный момент нельзя принять заказ");
             } else {
                 order.setStatus(OrderStatus.KITCHEN_ACCEPTED);
                 orderRepository.save(order);
                 messageSender.acceptOrder(orderConverter.entityToDto(order));
-                log.info("Заказ с UUID " + uuid + " был успешно принят в работу.");
+                log.info("Заказ с UUID " + uuId + " был успешно принят в работу.");
                 return ResponseEntity.ok("Заказ успешно принят в работу");
             }
         } catch (EntityNotFoundException ex) {
@@ -222,6 +264,7 @@ public class OrderControllerService {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Произошла ошибка при принятии заказа: " + ex.getMessage());
         }
     }
+
 
     public ResponseEntity<?> completeOrder(UUID uuid) {
         try {
