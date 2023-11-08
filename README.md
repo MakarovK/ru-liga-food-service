@@ -2,7 +2,7 @@
 ---
 ## Для работы программы используется 4 микросервиса Delivery-service, Kitchen-service, Notification-service, Order-service.
 -----------
-## **Сервис заказов **
+## **Сервис заказов**
 -----------
 Создание заказа (после запуска всех 4х микросервисов) происходит по URL http://localhost:8084/customer/2/create.
 Этот URL создаёт заказ и возвращает нам его UUID, после оплаты заказа (http://localhost:8084/customer/{UUID}/payment) заказ передаётся на кухню
